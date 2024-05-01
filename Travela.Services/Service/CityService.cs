@@ -43,7 +43,7 @@ namespace Travela.Services.Service
             return lst;
         }
 
-        public CityModel Get(long id)
+        public CityModel GetList(long id)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace Travela.Services.Service
 
 
         #endregion
-
+        
         #region Disposing Method(s)
 
         private bool disposed;
