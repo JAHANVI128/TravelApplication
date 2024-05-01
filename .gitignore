@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Travela/.vs
+/Travela/bin/Debug/net8.0
+/Travela/obj
+/Travela.Common/bin/Debug/net8.0
+/Travela.Common/obj
+/Travela.IService/bin/Debug/net8.0
+/Travela.IService/obj
+/Travela.Security/bin/Debug/net8.0
+/Travela.Security/obj
+/Travela.Model/bin/Debug/net8.0
+/Travela.Model/obj
+/Travela.Services/bin/Debug/net8.0
+/Travela.Services/obj
