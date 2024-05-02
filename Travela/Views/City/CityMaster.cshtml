@@ -1,0 +1,165 @@
+﻿@* 
+                                <table class="table display nowrap table-striped table-bordered scroll-horizontal w-100 text-center nowrap dataTable no-footer" id="tbldata">
+                                    <thead>
+                                        <tr>
+                                            <th>City Id</th>
+                                            <th>City Name</th>
+                                            <th>Is Active</th>
+                                            <th>Created by</th>
+                                            <th>Created Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+*@
+
+@using Travela.Models.Entities;
+@model CityRequest
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h1 class="page-title" style="font-size : 1.75rem; color : #A15BFF"> City List</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Tour Routes</li>
+                    <li class="breadcrumb-item active" aria-current="page">City Master</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="order-listing_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="order-listing_length">
+                                        <label style="display:flex">Show      
+                                            <select name="order-listing_length" aria-controls="order-listing" class="custom-select custom-select-sm form-control" style="margin-left:5px;margin-top: -5px;margin-right:5px;width:7%">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="15">15</option>
+                                                <option value="-1">All</option>
+                                            </select> entries
+                                        </label>
+                                     </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6" >
+                                    <div id="order-listing_filter" class="dataTables_filter" style="float:right;margin: -5px;">
+                                            <label><input type="search" class="form-control" placeholder="Search City" aria-controls="order-listing"></label>
+                                     </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <a href="@Url.Action("CityMaster", "City")" id="addCityBtn" data-bs-toggle="modal" data-bs-target="#addCityModal" class="btn btn-outline-primary" style="float : right; left : -245px; position: relative; top : -40px;"> Add City</a>
+                                </div>
+                                </br>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="" tbldata" class="table dataTable display nowrap table-striped table-bordered scroll-horizontal w-100 text-center nowrap dataTable no-footer" aria-describedby="order-listing_info">
+                                        <thead>
+                                            <tr>
+                                                <th>City Id</th>
+                                                <th>City Name</th>
+                                                <th>Is Active</th>
+                                                <th>Created By</th>
+                                                <th>Created Date</th>
+                                                <th>Actions</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            @* <tr class="odd">
+                                                <td class="sorting_1">1</td>
+                                                <td>2012/08/03</td>
+                                                <td>Edinburgh</td>
+                                                <td>New York</td>
+                                                <td>$1500</td>
+                                                <td>
+                                                    <button class="btn btn-outline-info">Edit</button>&nbsp;&nbsp;&nbsp;
+                                                    <button class="btn btn-outline-danger">Delete</button>
+                                                </td>
+                                            </tr> *@
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top : 20px">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="order-listing_info" role="status" aria-live="polite">
+                                        Showing 1 to 10 of 10 entries
+                                     </div>
+                                 </div>
+                                 <div class="col-sm-12 col-md-7">
+                                     <div class="dataTables_paginate paging_simple_numbers" id="order-listing_paginate">
+                                         <ul class="pagination" style="float : right">
+                                              <li class="paginate_button page-item previous disabled" id="order-listing_previous">
+                                                 <a aria-controls="order-listing" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a>
+                                              </li>
+                                              <li class="paginate_button page-item active"><a href="#" aria-controls="order-listing" role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li>
+                                              <li class="paginate_button page-item next disabled" id="order-listing_next">
+                                                  <a aria-controls="order-listing" aria-disabled="true" role="link" data-dt-idx="next" tabindex="-1" class="page-link">Next</a>
+                                              </li>
+                                         </ul>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024 Travela Agency. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+        </div>
+    </footer>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+@section Scripts {
+
+    <script src="~/js/City.js"></script>
+    <!-- Modal -->
+    <div class="modal fade" id="addCityModal" tabindex="-1" aria-labelledby="addCityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCityModalLabel">Add City Name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="form">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="CityId" />
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="CityName">City Name:</label>
+                            <input type="text" class="form-control" id="CityName" name="CityName" required>
+                            <span class="text-danger" id="cityError"></span>
+                            <div class="col-md-4 mt-1">
+                                <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                    <br />
+                                    <input type="checkbox" class="custom-control-input" asp-for="IsActive" />
+                                    <label class="custom-control-label float-left">Is Active</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn grey btn-outline-secondary btn-round" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-primary btn-round" id="btnMdlSave">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

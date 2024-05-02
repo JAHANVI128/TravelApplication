@@ -37,7 +37,7 @@ namespace Travela.Services.Service
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error Into PROC_GetAllEmployee", ex.ToString(), "CityService", "GetAll");
+                ErrorLogger.Error("Error Into PROC_GetAllCity", ex.ToString(), "CityService", "GetAll");
                 lst = null;
             }
             return lst;
@@ -52,7 +52,7 @@ namespace Travela.Services.Service
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error Into GetAll employee id", ex.ToString(), "GalleryService", "Get");
+                ErrorLogger.Error("Error Into GetAll city id", ex.ToString(), "CityService", "GetList");
                 return null;
             }
         }
@@ -64,10 +64,10 @@ namespace Travela.Services.Service
             {
 
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                dictionary.Add("EmpId", model.cityId);
-                dictionary.Add("IsActive", model.isActive);
+                dictionary.Add("Id", model.cityId);
+                dictionary.Add("CityName", model.cityName);
 
-                var data = dapperConnection.GetListResult<long>("InsertOrUpdateEmployee", CommandType.StoredProcedure, dictionary).FirstOrDefault();
+                var data = dapperConnection.GetListResult<long>("InsertOrUpdateCity", CommandType.StoredProcedure, dictionary).FirstOrDefault();
 
                 if (model.cityId == 0)
                 {
@@ -82,36 +82,36 @@ namespace Travela.Services.Service
                 response.result = data;
 
                 response.Success = true;
-                response.Message = "Employee added/updated successfully.";
+                response.Message = "City added/updated successfully.";
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error adding/updating employee.", ex.ToString(), "EmployeeService", "AddOrUpdate");
+                ErrorLogger.Error("Error adding/updating city.", ex.ToString(), "CityService", "AddOrUpdate");
                 response.Success = false;
-                response.Message = "An error occurred while adding/updating employee.";
+                response.Message = "An error occurred while adding/updating city.";
             }
             return response;
 
         }
 
 
-        public JsonResponseModel Delete(long EmpId)
+        public JsonResponseModel Delete(long CityId)
         {
             JsonResponseModel response = new JsonResponseModel();
             try
             {
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                dictionary.Add("EmpId", EmpId);
+                dictionary.Add("Id", CityId);
 
                 // Your logic for deleting employee here
-                dapperConnection.GetListResult<int>("RemoveEmployee", CommandType.StoredProcedure, dictionary);
+                dapperConnection.GetListResult<int>("RemoveCity", CommandType.StoredProcedure, dictionary);
                 response.Success = true;
                 response.isError = false;
-                response.Message = "Employee deleted successfully.";
+                response.Message = "City deleted successfully.";
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error($"Error deleting employee with ID {EmpId}.", ex.ToString(), "EmployeeService", "Delete");
+                ErrorLogger.Error($"Error deleting city with ID {CityId}.", ex.ToString(), "CityService", "Delete");
                 response.Success = false;
                 response.Message = "An error occurred while deleting employee.";
             }
