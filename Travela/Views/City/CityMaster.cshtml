@@ -1,20 +1,4 @@
-﻿@* 
-                                <table class="table display nowrap table-striped table-bordered scroll-horizontal w-100 text-center nowrap dataTable no-footer" id="tbldata">
-                                    <thead>
-                                        <tr>
-                                            <th>City Id</th>
-                                            <th>City Name</th>
-                                            <th>Is Active</th>
-                                            <th>Created by</th>
-                                            <th>Created Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-*@
-
-@using Travela.Models.Entities;
+﻿@using Travela.Models.Entities;
 @model CityRequest
 
 <div class="main-panel">
@@ -54,7 +38,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <a href="@Url.Action("CityMaster", "City")" id="addCityBtn" data-bs-toggle="modal" data-bs-target="#addCityModal" class="btn btn-outline-primary" style="float : right; left : -245px; position: relative; top : -40px;"> Add City</a>
+                                    <a id="addCityBtn" data-bs-toggle="modal" data-bs-target="#addCityModal" class="btn btn-outline-primary" style="float : right; left : -245px; position: relative; top : -40px;"> Add City</a>
                                 </div>
                                 </br>
                             </div>
@@ -67,18 +51,18 @@
                                                 <th>City Id</th>
                                                 <th>City Name</th>
                                                 <th>Is Active</th>
-                                                <th>Created By</th>
-                                                <th>Created Date</th>
+@*                                                 <th>Created By</th>
+                                                <th>Created Date</th> *@
                                                 <th>Actions</th></tr>
                                         </thead>
                                         <tbody>
                                             @* <tr class="odd">
                                                 <td class="sorting_1">1</td>
                                                 <td>2012/08/03</td>
-                                                <td>Edinburgh</td>
-                                                <td>New York</td>
-                                                <td>$1500</td>
-                                                <td>
+                                                <td>Edinburgh</td> *@
+                                               @*  <td>New York</td>
+                                                <td>$1500</td> *@
+                                                @* <td>
                                                     <button class="btn btn-outline-info">Edit</button>&nbsp;&nbsp;&nbsp;
                                                     <button class="btn btn-outline-danger">Delete</button>
                                                 </td>

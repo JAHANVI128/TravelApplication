@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Travela.Common;
 using Travela.IService.Service;
 using Travela.Model.Service;
 using Travela.Model.System;
@@ -22,11 +23,23 @@ namespace Travela.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult CreateCity()
+        [HttpPost]
+        [Route("/City/GetCityData")]
+        public JsonResult GetCityData()
         {
-            CityRequest city = new CityRequest();
-            return View(city);
+            try
+            {
+                var lsdata =cityService.GetAll();
+
+                return Json(new { recordsFiltered = lsdata.Count(), recordsTotal = lsdata.Count(), data = lsdata });
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.Error(ex.Message, ex.ToString(), ControllerContext.ActionDescriptor.ControllerName, ControllerContext.ActionDescriptor.ActionName, ControllerContext.HttpContext.Request.Method);
+
+                return Json("");
+            }
+
         }
 
         [HttpGet]
@@ -51,19 +64,20 @@ namespace Travela.Controllers
         }
 
         [HttpPost]
-        public JsonResponseModel AddOrUpdate(CityRequest cityRequest)
+        [Route("/City/AddOrUpdateCity")]
+        public JsonResponseModel AddOrUpdateCity(CityRequest cityRequest)
         {
             JsonResponseModel obj = new JsonResponseModel();
 
             try
             {
                 CityModel model = new CityModel();
-                model.cityId = cityRequest.CityId;
+                //model.cityId = cityRequest.CityId;
                 model.cityName = cityRequest.CityName;
                 model.isActive = cityRequest.IsActive;
-                model.isDelete = cityRequest.IsDelete;
-                model.createdBy = cityRequest.CreatedBy;
-                model.createdDate = cityRequest.CreatedDate;
+                //model.isDelete = cityRequest.IsDelete;
+                //model.createdBy = cityRequest.CreatedBy;
+                //model.createdDate = cityRequest.CreatedDate;
 
                 var result = cityService.AddOrUpdate(model);
 
@@ -80,7 +94,7 @@ namespace Travela.Controllers
         }
 
         [HttpPost]
-        public JsonResponseModel Delete(int cityId)
+        public JsonResponseModel DeleteCity(int cityId)
         {
             JsonResponseModel objreturn = new JsonResponseModel();
             try

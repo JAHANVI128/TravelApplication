@@ -1,11 +1,15 @@
 ﻿
 $(document).ready(function () {
     BindGrid();
+
+    $('#addCityBtn').click(function () {
+        $('#addCityModal').modal('show');
+    });
+
     $('#btnMdlSave').click(function () {
 
         // Validation
         var cityName = $('#CityName').val();
-        // Reset previous errors
         $('.text-danger').text('');
 
         // Custom validations
@@ -18,27 +22,25 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/City/AddOrUpdate",
+            url: "/City/AddOrUpdateCity",
             data: formdata,
             processData: false,
             contentType: false,
             dataType: 'json',
             success: function (data) {
                 if (data != null && data != undefined) {
-                    ShowMessage(data.strMessage, "", data.type);
+                    /*ShowMessage(data.strMessage, "", data.type);*/
                     BindGrid();
-                    $('#addCityModal').modal('show');
-                    if (typeof data.isError != 'undefined' && data.isError == false) {
-                        $('#addCityModal').modal('hide');
-                        ClearForm();
-                    }
+                    $('#addCityModal').modal('hide');
+                    alert(data.message);
+                    $('#form')[0].reset();
                 }
                 else {
-                    ShowMessage("Record not saved, Try again", "", "error");
+                    alert("Record not saved, Try again", "", "error");
                 }
             },
             error: function (ex) {
-                ShowMessage("Something went wrong, Try again!", "", "error");
+                alert("Something went wrong, Try again!", "", "error");
             }
         });
 
@@ -114,7 +116,6 @@ $('.delete-btn').click(function () {
 });
 
 function BindGrid() {
-    debugger;
     if ($.fn.DataTable.isDataTable("#tbldata")) {
         $('#tbldata').DataTable().clear().destroy();
     }
@@ -133,7 +134,6 @@ function BindGrid() {
         "initComplete": function () {
             var api = this.api();
             var searchInput = $('.dataTables_filter input');
-
             searchInput.on('keyup change', function () {
                 if (searchInput.val() === '') {
                     api.search('').draw();
@@ -141,19 +141,16 @@ function BindGrid() {
             });
         },
         "ajax": {
-            "url": "/City/",
-            "contentType": "application/x-www-form-urlencoded",
+            "url": "/City/GetCityData",
+            "contentType": false,
             "type": "POST",
             'data': {
                 "AntiforgeryFieldname": token
-                // etc..
             },
             "datatype": "json",
             "dataSrc": function (json) {
 
-                // Settings.
                 var jsonObj = json.data;
-                // Data
                 return jsonObj;
             }
         },
@@ -165,12 +162,12 @@ function BindGrid() {
         "columns": [
 
             {
-                name: "City Id",
+                name: "Sr no.",
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }, autoWidth: true
             },
-            { data: "cityname", name: "City Name", autoWidth: true },
+            { data: "CityName", name: "City Name", autoWidth: true },
             {
                 data: null,
                 render: function (data, type, row) {
