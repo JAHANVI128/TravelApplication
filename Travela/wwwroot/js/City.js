@@ -1,5 +1,5 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
+    console.log("Document ready");
     BindGrid();
 
     $('#addCityBtn').click(function () {
@@ -8,11 +8,9 @@ $(document).ready(function () {
 
     $('#btnMdlSave').click(function () {
 
-        // Validation
         var cityName = $('#CityName').val();
-        $('.text-danger').text('');
+        //$('.text-danger').text('');
 
-        // Custom validations
         if (!cityName) {
             $('#cityError').text('Please enter City Name.');
             return;
@@ -28,11 +26,10 @@ $(document).ready(function () {
             contentType: false,
             dataType: 'json',
             success: function (data) {
-                if (data != null && data != undefined) {
-                    /*ShowMessage(data.strMessage, "", data.type);*/
-                    BindGrid();
-                    $('#addCityModal').modal('hide');
+                if (data != null && data != undefined) {  
                     alert(data.message);
+                    $('#addCityModal').modal('hide');                    
+                    BindGrid();
                     $('#form')[0].reset();
                 }
                 else {
@@ -45,86 +42,70 @@ $(document).ready(function () {
         });
 
     });
-});
 
+    function EditModel(cityid) {
+        debugger;
+        var formdata = new FormData($('#form')[0]);
+        var token = $('input[name="AntiforgeryFieldname"]').val();
 
-
-function EditModel(cityid) {
-
-    debugger;
-    // Prepare form data
-    var formdata = new FormData($('#form')[0]);
-    var token = $('input[name="AntiforgeryFieldname"]').val();
-
-    // Make AJAX request to get qualification details
-    $.ajax({
-        type: "POST",
-        contentType: false,
-        url: "/Qualification/GetQualificationDetails",
-        data: { QuaId: cityid }, // Pass QuaId to the server
-        success: function (data) {
-            $('#addQualificationModal').modal('show')
-            if (data.isError) {
-                ShowMessage(data.strMessage, "", "error");
-            } else {
-                var qualification = data.result;
-
-                // Loop through qualification data and populate form fields
-                Object.keys(qualification).forEach(function (key) {
-                    var field = $('#' + key);
-
-                    if (field.length > 0) {
-                        if (key === "description") {
-                            CKEDITOR.instances['Description'].setData(qualification[key]);
-                        } else {
-                            field.val(qualification[key]);
-                        }
-                    }
-                });
-            }
-        },
-        error: function (ex) {
-            ShowMessage("Something went wrong, Try again!", "", "error");
-
-        }
-    });
-}
-
-
-// Handle delete button click
-$('.delete-btn').click(function () {
-    var qualificationId = $(this).data('qualification-id');
-    var row = $(this).closest('tr');
-
-    // Confirm deletion with user
-    if (confirm('Are you sure you want to delete this Qualification Name?')) {
-        // Send AJAX request to delete employee
         $.ajax({
             type: "POST",
-            url: ResolveUrl("/Qualification/DeleteQualificationData"),
-            data: { qualificationId: qualificationId },
-            success: function (result) {
-                // Remove the corresponding row from the table upon successful deletion
-                row.remove();
-                alert('Department deleted successfully.');
+            contentType: false,
+            url: "/City/EditCity",
+            data: { cityid: cityid }, 
+            success: function (data) {
+                $('#addCityModal').modal('show')
+                if (data.isError) {
+                    ShowMessage(data.strMessage, "", "error");
+                } else {
+                    var city = data.result;
+
+                    Object.keys(city).forEach(function (key) {
+                        var field = $('#' + key);
+
+                        if (field.length > 0) {
+                            if (key === "description") {
+                                CKEDITOR.instances['Description'].setData(city[key]);
+                            } else {
+                                field.val(city[key]);
+                            }
+                        }
+                    });
+                }
             },
-            error: function () {
-                alert("An error occurred while deleting the Qualification.");
+            error: function (ex) {
+                ShowMessage("Something went wrong, Try again!", "", "error");
             }
         });
     }
+
+    $('.delete-btn').click(function () {
+        var cityId = $(this).data('cityid');
+        var row = $(this).closest('tr');
+
+        if (confirm('Are you sure you want to delete this City Name?')) {
+            $.ajax({
+                type: "POST",
+                url: ResolveUrl("/City/DeleteCity"),
+                data: { cityId: cityId },
+                success: function (result) {
+                    row.remove();
+                    alert('City deleted successfully.');
+                },
+                error: function () {
+                    alert("An error occurred while deleting the City.");
+                }
+            });
+        }
+    });
 });
 
 function BindGrid() {
     if ($.fn.DataTable.isDataTable("#tbldata")) {
         $('#tbldata').DataTable().clear().destroy();
     }
-
     var yesBadge = '<td><span class="badge badge-info mt-1">Yes</span></td>';
     var noBadge = '<td><span class="badge badge-secondary mt-1">No</span></td>';
-
-    var form = $('#frmAddEdit');
-    var token = $('input[name="AntiforgeryFieldname"]', form).val();
 
     $("#tbldata").DataTable({
         "processing": true, // for show progress bar
@@ -134,6 +115,7 @@ function BindGrid() {
         "initComplete": function () {
             var api = this.api();
             var searchInput = $('.dataTables_filter input');
+
             searchInput.on('keyup change', function () {
                 if (searchInput.val() === '') {
                     api.search('').draw();
@@ -142,14 +124,11 @@ function BindGrid() {
         },
         "ajax": {
             "url": "/City/GetCityData",
-            "contentType": false,
+            "contentType": "application/x-www-form-urlencoded",
             "type": "POST",
-            'data': {
-                "AntiforgeryFieldname": token
-            },
             "datatype": "json",
             "dataSrc": function (json) {
-
+                console.log(json.data);
                 var jsonObj = json.data;
                 return jsonObj;
             }
@@ -160,14 +139,13 @@ function BindGrid() {
             "searchable": false
         }],
         "columns": [
-
             {
-                name: "Sr no.",
+                name: "City Id",
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }, autoWidth: true
             },
-            { data: "CityName", name: "City Name", autoWidth: true },
+            { data: "cityName", name: "City Name", autoWidth: true },
             {
                 data: null,
                 render: function (data, type, row) {
@@ -177,13 +155,16 @@ function BindGrid() {
             {
                 data: null,
                 render: function (data, type, row) {
-                    var strEdit = "<button class=\"btn mb-0 btn-outline-success btnedit\" title=\"Edit\" onclick=\"EditModel('" + row.id + "','" + 1 + "');\" ><i class=\"fas fa-pencil-alt\"></i>Edit</button>&nbsp;";
-                    var strRemove = "<button class=\"btn mb-0 btn-outline-danger btndelete\" title=\"Delete\" onclick=\"DeleteData('" + row.id + "', '" + row.title + "');\"><i class=\"fas fa-trash-alt\"></i>Delete</button>";
-                    var strMain = strEdit + strRemove;
+                    var strEdit = "<a class=\"btn mb-0 btn-outline-success btnedit\" title=\"Edit\" onclick=\"EditModel('" + row.id + "','" + 1 + "');\" >Edit<i class=\"fas fa-pencil-alt\"></i></a>&nbsp;";
+                    var strRemove = "<a class=\"btn mb-0 btn-outline-danger btndelete\" title=\"Delete\" onclick=\"DeleteData('" + row.id + "', '" + row.title + "');\">Delete<i class=\"fas fa-trash-alt\"></i></a>";
+                    var strMain = strEdit + strRemove ;
+
                     return strMain;
                 }, autoWidth: true
-            },
+            }          
+            
         ]
+
 
     });
 }

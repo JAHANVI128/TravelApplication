@@ -4,6 +4,7 @@ using Travela.IService.Service;
 using Travela.Model.Service;
 using Travela.Model.System;
 using Travela.Models.Entities;
+using Travela.Services.Service;
 
 namespace Travela.Controllers
 {
@@ -19,7 +20,6 @@ namespace Travela.Controllers
         [HttpGet]
         public IActionResult CityMaster()
         {
-            //var cities = cityService.GetList();
             return View();
         }
 
@@ -29,7 +29,7 @@ namespace Travela.Controllers
         {
             try
             {
-                var lsdata =cityService.GetAll();
+                var lsdata = cityService.GetAll();
 
                 return Json(new { recordsFiltered = lsdata.Count(), recordsTotal = lsdata.Count(), data = lsdata });
             }
@@ -43,6 +43,7 @@ namespace Travela.Controllers
         }
 
         [HttpGet]
+        [Route("/City/EditCity")]
         public IActionResult EditCity(int cityId)
         {
             var city = cityService.GetList(cityId);
@@ -68,16 +69,12 @@ namespace Travela.Controllers
         public JsonResponseModel AddOrUpdateCity(CityRequest cityRequest)
         {
             JsonResponseModel obj = new JsonResponseModel();
-
             try
             {
                 CityModel model = new CityModel();
-                //model.cityId = cityRequest.CityId;
+                model.cityId = cityRequest.CityId;
                 model.cityName = cityRequest.CityName;
                 model.isActive = cityRequest.IsActive;
-                //model.isDelete = cityRequest.IsDelete;
-                //model.createdBy = cityRequest.CreatedBy;
-                //model.createdDate = cityRequest.CreatedDate;
 
                 var result = cityService.AddOrUpdate(model);
 
@@ -89,11 +86,12 @@ namespace Travela.Controllers
                 obj.result = false;
                 obj.Message = "An error occurred: " + ex.Message;
             }
-
+             
             return obj;
         }
 
         [HttpPost]
+        [Route("/City/DeleteCity")]
         public JsonResponseModel DeleteCity(int cityId)
         {
             JsonResponseModel objreturn = new JsonResponseModel();

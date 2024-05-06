@@ -28,7 +28,8 @@ namespace Travela.Common
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error Into query=>ValidateConnection \r\n", ex.ToString(), "", "", "", true);
+                //ErrorLogger.Error("Error Into query=>ValidateConnection \r\n", ex.ToString(), "", "", "", true);
+                Console.WriteLine("Error connecting to MySQL: " + ex.Message);
                 return false;
             }
         }

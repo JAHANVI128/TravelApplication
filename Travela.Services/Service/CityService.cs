@@ -66,6 +66,7 @@ namespace Travela.Services.Service
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
                 dictionary.Add("Id", model.cityId);
                 dictionary.Add("CityName", model.cityName);
+                dictionary.Add("IsActive", model.isActive);
 
                 var data = dapperConnection.GetListResult<long>("InsertOrUpdateCity", CommandType.StoredProcedure, dictionary).FirstOrDefault();
 
