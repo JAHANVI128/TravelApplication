@@ -49,14 +49,15 @@ namespace Travela.Controllers
             var city = cityService.GetList(cityId);
             if (city != null)
             {
-                CityRequest cityRequest = new CityRequest();
-                cityRequest.CityId = city.cityId;
-                cityRequest.CityName = city.cityName;
-                cityRequest.IsActive = city.isActive;
-                cityRequest.IsDelete = city.isDelete;
-                cityRequest.CreatedBy = city.createdBy;
-                cityRequest.CreatedDate = city.createdDate;
-                return View("CreateCity", cityRequest);
+                //CityRequest cityRequest = new CityRequest();
+                //cityRequest.CityId = city.cityId;
+                //cityRequest.CityName = city.cityName;
+                //cityRequest.IsActive = city.isActive;
+                //cityRequest.IsDelete = city.isDelete;
+                //cityRequest.CreatedBy = city.createdBy;
+                //cityRequest.CreatedDate = city.createdDate;
+                //return View("CreateCity", cityRequest);
+                return Json(city);
             }
             else
             {
