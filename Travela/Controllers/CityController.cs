@@ -44,25 +44,36 @@ namespace Travela.Controllers
 
         [HttpGet]
         [Route("/City/EditCity")]
-        public IActionResult EditCity(int cityId)
+        public JsonResponseModel EditCity(int cityId)
         {
-            var city = cityService.GetList(cityId);
-            if (city != null)
+            JsonResponseModel objreturn = new JsonResponseModel();
+            try
             {
-                //CityRequest cityRequest = new CityRequest();
-                //cityRequest.CityId = city.cityId;
-                //cityRequest.CityName = city.cityName;
-                //cityRequest.IsActive = city.isActive;
-                //cityRequest.IsDelete = city.isDelete;
-                //cityRequest.CreatedBy = city.createdBy;
-                //cityRequest.CreatedDate = city.createdDate;
-                //return View("CreateCity", cityRequest);
-                return Json(city);
+                var city = cityService.GetById(cityId);
+                if (city != null)
+                {
+                    objreturn.result = city;
+                    //CityRequest cityRequest = new CityRequest();
+                    //cityRequest.CityId = city.cityId;
+                    //cityRequest.CityName = city.cityName;
+                    //cityRequest.IsActive = city.isActive;
+                    //cityRequest.IsDelete = city.isDelete;
+                    //cityRequest.CreatedBy = city.createdBy;
+                    //cityRequest.CreatedDate = city.createdDate;
+                    //return View("CreateCity", cityRequest);
+                    return objreturn;
+                }
+                else
+                {
+                    return objreturn;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                return NotFound();
+                objreturn.isError = true;
+                return objreturn;
             }
+
         }
 
         [HttpPost]

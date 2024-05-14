@@ -8,7 +8,7 @@ namespace Travela.IService.Service
     {
         List<CityModel> GetAll();
 
-        CityModel GetList(long id);
+        CityModel GetById(long id);
 
         JsonResponseModel AddOrUpdate(CityModel model);
         JsonResponseModel Delete(long EmpId);

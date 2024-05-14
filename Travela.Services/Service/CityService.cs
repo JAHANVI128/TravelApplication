@@ -43,7 +43,7 @@ namespace Travela.Services.Service
             return lst;
         }
 
-        public CityModel GetList(long id)
+        public CityModel GetById(long id)
         {
             try
             {
