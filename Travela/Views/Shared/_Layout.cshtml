@@ -202,7 +202,7 @@
                                     <a class="nav-link" asp-controller="City" asp-action="CityMaster">City Master</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Source Master</a>
+                                    <a class="nav-link" asp-controller="Source" asp-action="SourceMaster">Source Master</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Destination Master</a>
@@ -288,7 +288,7 @@
                     @if (@ViewData["HeaderName"] != null)
                      {
                         <div class="page-header">
-                            <h1 class="page-title" style="font-size : 1.75rem; color : #A15BFF"> City List</h1>
+                            <h1 class="page-title" style="font-size : 1.75rem; color : #A15BFF"> @ViewData["Title"]</h1>
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">@ViewData["MenuName"]</li>

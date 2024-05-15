@@ -2,16 +2,16 @@
     console.log("Document ready");
     BindGrid();
 
-    $('#addCityBtn').click(function () {
-        $('#addCityModal').modal('show');
+    $('#addSourceBtn').click(function () {
+        $('#addSourceModal').modal('show');
     });
 
     $('#btnMdlSave').click(function () {
 
-        var cityName = $('#CityName').val();
+        var sourceName = $('#SourceName').val();
 
-        if (!cityName) {
-            $('#cityError').text('Please enter City Name.');
+        if (!sourceName) {
+            $('#sourceError').text('Please enter Source Name.');
             return;
         }
 
@@ -19,7 +19,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/City/AddOrUpdateCity",
+            url: "/Source/AddOrUpdateSource",
             data: formdata,
             processData: false,
             contentType: false,
@@ -27,7 +27,7 @@
             success: function (data) {
                 if (data != null && data != undefined) {
                     alert(data.message);
-                    $('#addCityModal').modal('hide');
+                    $('#addSourceModal').modal('hide');
                     BindGrid();
                     $('#form')[0].reset();
                 }
@@ -46,22 +46,14 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function EditModel(cityId) {
+function EditModel(sourceId) {
     console.log("Hii");
 
     $.ajax({
         type: "GET",
-        url: "/City/EditCity",
-        data: { cityId: cityId }, // Pass cityId as a parameter
-        //    // Populate modal form fields with retrieved data
-        //    $('#CityName').val(data.cityName);
-        //    $('#IsActive').prop('checked', data.isActive);
-        //    // Show the modal
-        //    $('#addCityModal').modal('show');
-        //},
-        //error: function (ex) {
-        //    alert("Something went wrong, Try again!", "", "error");
-        //}
+        url: "/Source/EditSource",
+        data: { sourceId: sourceId }, // Pass cityId as a parameter
+
         success: function (data) {
             debugger;
             if (data.isError) {
@@ -81,7 +73,7 @@ function EditModel(cityId) {
                     }
                 });
             }
-            $('#addCityModal').modal('show');
+            $('#addSourceModal').modal('show');
         },
         error: function (ex) {
             ShowMessage("Something went wrong. Please try again.", "", "error");
@@ -89,20 +81,20 @@ function EditModel(cityId) {
     });
 }
 
-function DeleteData(cityId, cityName) {
+function DeleteData(sourceId, sourceName) {
     var row = $(this).closest('tr');
 
-    if (confirm('Are you sure you want to delete the city "' + cityName + '"?')) {
+    if (confirm('Are you sure you want to delete "' + sourceName + '" as a source city?')) {
         $.ajax({
             type: "POST",
-            url: "/City/DeleteCity",
-            data: { cityId: cityId },
+            url: "/Source/DeleteSource",
+            data: { sourceId: sourceId },
             success: function (result) {
                 BindGrid();
-                alert('City deleted successfully.');
+                alert('Source deleted successfully.');
             },
             error: function () {
-                alert("An error occurred while deleting the city.");
+                alert("An error occurred while deleting the source.");
             }
         });
     }
@@ -131,7 +123,7 @@ function BindGrid() {
             });
         },
         "ajax": {
-            "url": "/City/GetCityData",
+            "url": "/Source/GetSourceData",
             "contentType": "application/x-www-form-urlencoded",
             "type": "POST",
             "datatype": "json",
@@ -147,26 +139,23 @@ function BindGrid() {
         }],
         "columns": [
             {
-                name: "City Id",
+                name: "Source Id",
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }, autoWidth: true
             },
-            { data: "cityName", name: "City Name", autoWidth: true },
+            { data: "sourceName", name: "Source Name", autoWidth: true },
             {
                 data: null,
                 render: function (data, type, row) {
                     return row.isActive ? yesBadge : noBadge;
-
-
-
                 }, autoWidth: true
             },
             {
                 data: null,
                 render: function (data, type, row) {
-                    var editButton = "<button class=\"btn mb-0 btn-outline-success btnedit\" title=\"Edit\" onclick=\"EditModel('" + row.cityId + "');\">Edit<i class=\"fas fa-pencil-alt\"></i></button>&nbsp;";
-                    var deleteButton = "<button class=\"btn mb-0 btn-outline-danger btndelete\" title=\"Delete\" onclick=\"DeleteData('" + row.cityId + "', '" + row.cityName + "');\">Delete<i class=\"fas fa-trash-alt\"></i></button>";
+                    var editButton = "<button class=\"btn mb-0 btn-outline-success btnedit\" title=\"Edit\" onclick=\"EditModel('" + row.sourceId + "');\">Edit<i class=\"fas fa-pencil-alt\"></i></button>&nbsp;";
+                    var deleteButton = "<button class=\"btn mb-0 btn-outline-danger btndelete\" title=\"Delete\" onclick=\"DeleteData('" + row.sourceId + "', '" + row.sourceName + "');\">Delete<i class=\"fas fa-trash-alt\"></i></button>";
                     return editButton + deleteButton;
                 }, autoWidth: true
             }

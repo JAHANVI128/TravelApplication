@@ -16,6 +16,7 @@ builder.Services.AddControllersWithViews();
 
 // Dependency Injection
 builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<ISourceService, SourceService>();
 
 var app = builder.Build();
 

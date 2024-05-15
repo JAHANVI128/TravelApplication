@@ -11,6 +11,6 @@ namespace Travela.IService.Service
         CityModel GetById(long id);
 
         JsonResponseModel AddOrUpdate(CityModel model);
-        JsonResponseModel Delete(long EmpId);
+        JsonResponseModel Delete(long id);
     }
 }

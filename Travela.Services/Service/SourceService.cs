@@ -11,7 +11,7 @@ using Travela.Model.System;
 
 namespace Travela.Services.Service
 {
-   public class CityService : ICityService
+    public class SourceService : ISourceService
     {
 
         #region Constants
@@ -19,7 +19,7 @@ namespace Travela.Services.Service
         #endregion
 
         #region Constructor
-        public CityService()
+        public SourceService()
         {
             dapperConnection = new DapperConnection();
         }
@@ -27,50 +27,50 @@ namespace Travela.Services.Service
 
         #region Public Method(s)        
 
-        public List<CityModel> GetAll()
+        public List<SourceModel> GetAll()
         {
-            _ = new List<CityModel>();
-            List<CityModel> lst;
+            _ = new List<SourceModel>();
+            List<SourceModel> lst;
             try
             {
-                lst = dapperConnection.GetListResult<CityModel>("PROC_GetCity", CommandType.StoredProcedure).ToList();
+                lst = dapperConnection.GetListResult<SourceModel>("PROC_GetSource", CommandType.StoredProcedure).ToList();
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error Into PROC_GetAllCity", ex.ToString(), "CityService", "GetAll");
+                ErrorLogger.Error("Error Into PROC_GetSource", ex.ToString(), "SourceService", "GetAll");
                 lst = null;
             }
             return lst;
         }
 
-        public CityModel GetById(long id)
+        public SourceModel GetById(long id)
         {
             try
             {
-                var dataModel = GetAll().Where(x => x.cityId == id).FirstOrDefault();
+                var dataModel = GetAll().Where(x => x.sourceId == id).FirstOrDefault();
                 return dataModel;
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error Into GetAll city id", ex.ToString(), "CityService", "GetList");
+                ErrorLogger.Error("Error Into Get Source Id", ex.ToString(), "SourceService", "GetById");
                 return null;
             }
         }
 
-        public JsonResponseModel AddOrUpdate(CityModel model)
+        public JsonResponseModel AddOrUpdate(SourceModel model)
         {
             JsonResponseModel response = new JsonResponseModel();
             try
             {
 
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                dictionary.Add("Id", model.cityId);
-                dictionary.Add("CityName", model.cityName);
+                dictionary.Add("Id", model.sourceId);
+                dictionary.Add("SourceName", model.sourceName);
                 dictionary.Add("IsActive", model.isActive);
 
-                var data = dapperConnection.GetListResult<long>("InsertOrUpdateCity", CommandType.StoredProcedure, dictionary).FirstOrDefault();
+                var data = dapperConnection.GetListResult<long>("InsertOrUpdateSource", CommandType.StoredProcedure, dictionary).FirstOrDefault();
 
-                if (model.cityId == 0)
+                if (model.sourceId == 0)
                 {
                     response.strMessage = "Register successfully";
                 }
@@ -83,36 +83,34 @@ namespace Travela.Services.Service
                 response.result = data;
 
                 response.Success = true;
-                response.Message = "City added/updated successfully.";
+                response.Message = "Source added/updated successfully.";
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error adding/updating city.", ex.ToString(), "CityService", "AddOrUpdate");
+                ErrorLogger.Error("Error adding/updating source.", ex.ToString(), "SourceService", "AddOrUpdate");
                 response.Success = false;
-                response.Message = "An error occurred while adding/updating city.";
+                response.Message = "An error occurred while adding/updating source.";
             }
             return response;
-
         }
 
-
-        public JsonResponseModel Delete(long CityId)
+        public JsonResponseModel Delete(long SourceId)
         {
             JsonResponseModel response = new JsonResponseModel();
             try
             {
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                dictionary.Add("Id", CityId);
+                dictionary.Add("Id", SourceId);
 
                 // Your logic for deleting employee here
-                dapperConnection.GetListResult<int>("RemoveCity", CommandType.StoredProcedure, dictionary);
+                dapperConnection.GetListResult<int>("RemoveSource", CommandType.StoredProcedure, dictionary);
                 response.Success = true;
                 response.isError = false;
-                response.Message = "City deleted successfully.";
+                response.Message = "Source deleted successfully.";
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error($"Error deleting city with ID {CityId}.", ex.ToString(), "CityService", "Delete");
+                ErrorLogger.Error($"Error deleting Source with ID {SourceId}.", ex.ToString(), "SourceService", "Delete");
                 response.Success = false;
                 response.Message = "An error occurred while deleting source.";
             }
@@ -121,12 +119,12 @@ namespace Travela.Services.Service
 
 
         #endregion
-        
+
         #region Disposing Method(s)
 
         private bool disposed;
 
-        ~CityService()
+        ~SourceService()
         {
             Dispose(false);
         }

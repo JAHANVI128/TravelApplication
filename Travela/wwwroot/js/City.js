@@ -47,21 +47,12 @@ function capitalizeFirstLetter(string) {
 }
 
 function EditModel(cityId) {
-    console.log("Hii");
 
     $.ajax({
         type: "GET",
         url: "/City/EditCity",
         data: { cityId: cityId }, // Pass cityId as a parameter
-        //    // Populate modal form fields with retrieved data
-        //    $('#CityName').val(data.cityName);
-        //    $('#IsActive').prop('checked', data.isActive);
-        //    // Show the modal
-        //    $('#addCityModal').modal('show');
-        //},
-        //error: function (ex) {
-        //    alert("Something went wrong, Try again!", "", "error");
-            //}
+
             success: function (data) {
                 debugger;
                 if (data.isError) {
@@ -92,7 +83,7 @@ function EditModel(cityId) {
 function DeleteData(cityId, cityName) {
     var row = $(this).closest('tr');
 
-    if (confirm('Are you sure you want to delete the city "' + cityName + '"?')) {
+    if (confirm('Are you sure you want to delete "' + cityName + '" city?')) {
         $.ajax({
             type: "POST",
             url: "/City/DeleteCity",

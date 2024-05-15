@@ -8,51 +8,50 @@ using Travela.Services.Service;
 
 namespace Travela.Controllers
 {
-    public class CityController : Controller
+    public class SourceController : Controller
     {
-        private readonly ICityService cityService;
+        private readonly ISourceService sourceService;
 
-        public CityController(ICityService cityService)
+        public SourceController(ISourceService sourceService)
         {
-            this.cityService = cityService;
+            this.sourceService = sourceService;
         }
 
         [HttpGet]
-        public IActionResult CityMaster()
+        public IActionResult SourceMaster()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("/City/GetCityData")]
-        public JsonResult GetCityData()
+        [Route("/Source/GetSourceData")]
+        public JsonResult GetSourceData()
         {
             try
             {
-                var lsdata = cityService.GetAll();
+                var lsdata = sourceService.GetAll();
 
                 return Json(new { recordsFiltered = lsdata.Count(), recordsTotal = lsdata.Count(), data = lsdata });
             }
             catch (Exception ex)
             {
                 ErrorLogger.Error(ex.Message, ex.ToString(), ControllerContext.ActionDescriptor.ControllerName, ControllerContext.ActionDescriptor.ActionName, ControllerContext.HttpContext.Request.Method);
-
                 return Json("");
             }
 
         }
 
         [HttpGet]
-        [Route("/City/EditCity")]
-        public JsonResponseModel EditCity(int cityId)
+        [Route("/Source/EditSource")]
+        public JsonResponseModel EditSource(int sourceId)
         {
             JsonResponseModel objreturn = new JsonResponseModel();
             try
             {
-                var city = cityService.GetById(cityId);
-                if (city != null)
+                var source = sourceService.GetById(sourceId);
+                if (source != null)
                 {
-                    objreturn.result = city;
+                    objreturn.result = source;
                     return objreturn;
                 }
                 else
@@ -60,7 +59,7 @@ namespace Travela.Controllers
                     return objreturn;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 objreturn.isError = true;
                 return objreturn;
@@ -69,18 +68,18 @@ namespace Travela.Controllers
         }
 
         [HttpPost]
-        [Route("/City/AddOrUpdateCity")]
-        public JsonResponseModel AddOrUpdateCity(CityRequest cityRequest)
+        [Route("/Source/AddOrUpdateSource")]
+        public JsonResponseModel AddOrUpdateSource(SourceRequest sourceRequest)
         {
             JsonResponseModel obj = new JsonResponseModel();
             try
             {
-                CityModel model = new CityModel();
-                model.cityId = cityRequest.CityId;
-                model.cityName = cityRequest.CityName;
-                model.isActive = cityRequest.IsActive;
+                SourceModel model = new SourceModel();
+                model.sourceId = sourceRequest.SourceId;
+                model.sourceName = sourceRequest.SourceName;
+                model.isActive = sourceRequest.IsActive;
 
-                var result = cityService.AddOrUpdate(model);
+                var result = sourceService.AddOrUpdate(model);
 
                 obj.result = result.result;
                 obj.Message = "Record saved successfully";
@@ -90,24 +89,24 @@ namespace Travela.Controllers
                 obj.result = false;
                 obj.Message = "An error occurred: " + ex.Message;
             }
-             
+
             return obj;
         }
 
         [HttpPost]
-        [Route("/City/DeleteCity")]
-        public JsonResponseModel DeleteCity(int cityId)
+        [Route("/Source/DeleteSource")]
+        public JsonResponseModel DeleteSource(int sourceId)
         {
             JsonResponseModel objreturn = new JsonResponseModel();
             try
             {
-                objreturn = cityService.Delete(cityId);
+                objreturn = sourceService.Delete(sourceId);
             }
             catch (Exception ex)
             {
                 return objreturn;
             }
             return objreturn;
-        }   
+        }
     }
 }
