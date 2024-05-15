@@ -1,0 +1,76 @@
+﻿@using Travela.Models.Entities;
+@model DestinationRequest;
+@{
+    ViewData["HeaderName"] = "Destination List";
+    ViewData["Title"] = "Destination Master";
+    ViewData["MenuName"] = "Tour Route";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div id="order-listing_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <a id="addDestinationBtn" class="btn btn-outline-primary" style="float : right;"> Add Destination</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="tbldata" class="table dataTable" aria-describedby="order-listing_info">
+                        <thead>
+                            <tr>
+                                <th>Destination Id</th>
+                                <th>Destination Name</th>
+                                <th>Is Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/Destination.js"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-2.0.6/datatables.min.js"></script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addDestinationModal" tabindex="-1" aria-labelledby="addDestinationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDestinationModalLabel">Add Destination Name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="form">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="DestinationId" />
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="DestinationName">Destination Name:</label>
+                            <input type="text" class="form-control" id="DestinationName" name="DestinationName" required>
+                            <span class="text-danger" id="destinationError"></span>
+                            <div class="col-md-4 mt-1">
+                                <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                    <br />
+                                    <input type="checkbox" class="custom-control-input" asp-for="IsActive" />
+                                    <label class="custom-control-label float-left">Is Active</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn grey btn-outline-secondary btn-round" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-primary btn-round" id="btnMdlSave">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

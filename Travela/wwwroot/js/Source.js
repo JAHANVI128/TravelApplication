@@ -47,12 +47,11 @@ function capitalizeFirstLetter(string) {
 }
 
 function EditModel(sourceId) {
-    console.log("Hii");
 
     $.ajax({
         type: "GET",
         url: "/Source/EditSource",
-        data: { sourceId: sourceId }, // Pass cityId as a parameter
+        data: { sourceId: sourceId }, 
 
         success: function (data) {
             debugger;
