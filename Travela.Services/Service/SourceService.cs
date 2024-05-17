@@ -102,7 +102,6 @@ namespace Travela.Services.Service
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
                 dictionary.Add("Id", SourceId);
 
-                // Your logic for deleting employee here
                 dapperConnection.GetListResult<int>("RemoveSource", CommandType.StoredProcedure, dictionary);
                 response.Success = true;
                 response.isError = false;
@@ -129,13 +128,11 @@ namespace Travela.Services.Service
             Dispose(false);
         }
 
-
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
 
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
@@ -146,14 +143,9 @@ namespace Travela.Services.Service
                 {
                     // Dispose managed resources here.
                 }
-
-                // Dispose unmanaged resources here.
             }
-
             disposed = true;
         }
-
-
         #endregion
     }
 }

@@ -102,7 +102,6 @@ namespace Travela.Services.Service
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
                 dictionary.Add("Id", DestinationId);
 
-                // Your logic for deleting employee here
                 dapperConnection.GetListResult<int>("RemoveDestination", CommandType.StoredProcedure, dictionary);
                 response.Success = true;
                 response.isError = false;

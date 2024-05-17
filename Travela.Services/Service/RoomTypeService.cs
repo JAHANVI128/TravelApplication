@@ -11,7 +11,7 @@ using Travela.Model.System;
 
 namespace Travela.Services.Service
 {
-   public class CityService : ICityService
+    public class RoomTypeService : IRoomTypeService
     {
 
         #region Constants
@@ -19,7 +19,7 @@ namespace Travela.Services.Service
         #endregion
 
         #region Constructor
-        public CityService()
+        public RoomTypeService()
         {
             dapperConnection = new DapperConnection();
         }
@@ -27,50 +27,50 @@ namespace Travela.Services.Service
 
         #region Public Method(s)        
 
-        public List<CityModel> GetAll()
+        public List<RoomTypeModel> GetAll()
         {
-            _ = new List<CityModel>();
-            List<CityModel> lst;
+            _ = new List<RoomTypeModel>();
+            List<RoomTypeModel> lst;
             try
             {
-                lst = dapperConnection.GetListResult<CityModel>("PROC_GetCity", CommandType.StoredProcedure).ToList();
+                lst = dapperConnection.GetListResult<RoomTypeModel>("PROC_GetRoomType", CommandType.StoredProcedure).ToList();
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error Into PROC_GetAllCity", ex.ToString(), "CityService", "GetAll");
+                ErrorLogger.Error("Error Into PROC_GetRoomType", ex.ToString(), "RoomTypeService", "GetAll");
                 lst = null;
             }
             return lst;
         }
 
-        public CityModel GetById(long id)
+        public RoomTypeModel GetById(long id)
         {
             try
             {
-                var dataModel = GetAll().Where(x => x.cityId == id).FirstOrDefault();
+                var dataModel = GetAll().Where(x => x.roomTypeId == id).FirstOrDefault();
                 return dataModel;
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error Into GetAll city id", ex.ToString(), "CityService", "GetList");
+                ErrorLogger.Error("Error Into Get RoomType Id", ex.ToString(), "RoomTypeService", "GetById");
                 return null;
             }
         }
 
-        public JsonResponseModel AddOrUpdate(CityModel model)
+        public JsonResponseModel AddOrUpdate(RoomTypeModel model)
         {
             JsonResponseModel response = new JsonResponseModel();
             try
             {
 
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                dictionary.Add("Id", model.cityId);
-                dictionary.Add("CityName", model.cityName);
+                dictionary.Add("Id", model.roomTypeId);
+                dictionary.Add("RoomTypeName", model.roomTypeName);
                 dictionary.Add("IsActive", model.isActive);
 
-                var data = dapperConnection.GetListResult<long>("InsertOrUpdateCity", CommandType.StoredProcedure, dictionary).FirstOrDefault();
+                var data = dapperConnection.GetListResult<long>("InsertOrUpdateRoomType", CommandType.StoredProcedure, dictionary).FirstOrDefault();
 
-                if (model.cityId == 0)
+                if (model.roomTypeId == 0)
                 {
                     response.strMessage = "Register successfully";
                 }
@@ -83,58 +83,55 @@ namespace Travela.Services.Service
                 response.result = data;
 
                 response.Success = true;
-                response.Message = "City added/updated successfully.";
+                response.Message = "RoomType added/updated successfully.";
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error adding/updating city.", ex.ToString(), "CityService", "AddOrUpdate");
+                ErrorLogger.Error("Error adding/updating RoomType.", ex.ToString(), "RoomTypeService", "AddOrUpdate");
                 response.Success = false;
-                response.Message = "An error occurred while adding/updating city.";
+                response.Message = "An error occurred while adding/updating RoomType.";
             }
             return response;
-
         }
 
-        public JsonResponseModel Delete(long CityId)
+        public JsonResponseModel Delete(long RoomTypeId)
         {
             JsonResponseModel response = new JsonResponseModel();
             try
             {
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                dictionary.Add("Id", CityId);
+                dictionary.Add("Id", RoomTypeId);
 
-                dapperConnection.GetListResult<int>("RemoveCity", CommandType.StoredProcedure, dictionary);
+                dapperConnection.GetListResult<int>("RemoveRoomType", CommandType.StoredProcedure, dictionary);
                 response.Success = true;
                 response.isError = false;
-                response.Message = "City deleted successfully.";
+                response.Message = "RoomType deleted successfully.";
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error($"Error deleting city with ID {CityId}.", ex.ToString(), "CityService", "Delete");
+                ErrorLogger.Error($"Error deleting Room Type with ID {RoomTypeId}.", ex.ToString(), "RoomTypeService", "Delete");
                 response.Success = false;
-                response.Message = "An error occurred while deleting source.";
+                response.Message = "An error occurred while deleting RoomType.";
             }
             return response;
         }
 
         #endregion
-        
+
         #region Disposing Method(s)
 
         private bool disposed;
 
-        ~CityService()
+        ~RoomTypeService()
         {
             Dispose(false);
         }
-
 
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
 
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
@@ -145,14 +142,9 @@ namespace Travela.Services.Service
                 {
                     // Dispose managed resources here.
                 }
-
-                // Dispose unmanaged resources here.
             }
-
             disposed = true;
         }
-
-
         #endregion
     }
 }

@@ -18,6 +18,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<ISourceService, SourceService>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
+builder.Services.AddScoped<IRoomTypeService, RoomTypeService>();
 
 var app = builder.Build();
 
