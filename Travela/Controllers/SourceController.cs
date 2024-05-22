@@ -38,7 +38,6 @@ namespace Travela.Controllers
                 ErrorLogger.Error(ex.Message, ex.ToString(), ControllerContext.ActionDescriptor.ControllerName, ControllerContext.ActionDescriptor.ActionName, ControllerContext.HttpContext.Request.Method);
                 return Json("");
             }
-
         }
 
         [HttpGet]
@@ -64,7 +63,6 @@ namespace Travela.Controllers
                 objreturn.isError = true;
                 return objreturn;
             }
-
         }
 
         [HttpPost]
@@ -89,7 +87,6 @@ namespace Travela.Controllers
                 obj.result = false;
                 obj.Message = "An error occurred: " + ex.Message;
             }
-
             return obj;
         }
 

@@ -19,6 +19,7 @@ builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<ISourceService, SourceService>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<IRoomTypeService, RoomTypeService>();
+builder.Services.AddScoped<IHotelService, HotelService>();
 
 var app = builder.Build();
 
