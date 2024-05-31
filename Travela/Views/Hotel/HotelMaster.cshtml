@@ -1,1 +1,81 @@
-﻿
+﻿@using Travela.Models.Entities;
+@model SourceRequest;
+@{
+    ViewData["HeaderName"] = "Hotel List";
+    ViewData["Title"] = "Hotel Master";
+    ViewData["MenuName"] = "Hotels";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div id="order-listing_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <a id="addHotelBtn" class="btn btn-outline-primary" style="float : right;"> Add Hotel</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="tbldata" class="table dataTable" aria-describedby="order-listing_info">
+                        <thead>
+                            <tr>
+                                <th>Hotel Id</th>
+                                <th>Hotel Name</th>
+                                <th>Hotel Phone</th>
+                                <th>Hotel Email</th>
+                                <th>Hotel Address</th>
+                                <th>Hotel Description</th>
+                                <th>Is Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/Source.js"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-2.0.6/datatables.min.js"></script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addSourceModal" tabindex="-1" aria-labelledby="addSourceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSourceModalLabel">Add Source Name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="form">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="SourceId" />
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="SourceName">Source Name:</label>
+                            <input type="text" class="form-control" id="SourceName" name="SourceName" required>
+                            <span class="text-danger" id="sourceError"></span>
+                            <div class="col-md-4 mt-1">
+                                <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                    <br />
+                                    <input type="checkbox" class="custom-control-input" asp-for="IsActive" />
+                                    <label class="custom-control-label float-left">Is Active</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn grey btn-outline-secondary btn-round" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-primary btn-round" id="btnMdlSave">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
