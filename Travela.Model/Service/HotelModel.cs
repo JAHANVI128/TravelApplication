@@ -9,12 +9,10 @@ namespace Travela.Model.Service
     public class HotelModel
     {
         public int hotelId { get; set; }
+        public string hotelImage { get; set; }
         public string hotelName { get; set; }
         public string hotelPhone { get; set; }
-        public string hotelEmail { get; set; }
-        public string hotelAddress { get; set; }
-        public string hotelImage { get; set; }
-        public string hotelDescription { get; set; }
+        public string cityId { get; set; }
         public bool isActive { get; set; } = true;
         public bool isDelete { get; set; }
         public string createdBy { get; set; }

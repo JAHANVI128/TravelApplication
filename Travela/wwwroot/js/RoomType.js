@@ -138,7 +138,7 @@ function BindGrid() {
         }],
         "columns": [
             {
-                name: "Room Type Id",
+                name: "Sr. No. ",
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }, autoWidth: true

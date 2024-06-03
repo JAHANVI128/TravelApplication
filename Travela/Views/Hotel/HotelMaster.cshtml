@@ -1,5 +1,5 @@
 ﻿@using Travela.Models.Entities;
-@model SourceRequest;
+@model HotelRequest;
 @{
     ViewData["HeaderName"] = "Hotel List";
     ViewData["Title"] = "Hotel Master";
@@ -19,12 +19,11 @@
                     <table id="tbldata" class="table dataTable" aria-describedby="order-listing_info">
                         <thead>
                             <tr>
-                                <th>Hotel Id</th>
+                                <th>Sr no.</th>
+                                <th>Hotel Image</th>
                                 <th>Hotel Name</th>
                                 <th>Hotel Phone</th>
-                                <th>Hotel Email</th>
-                                <th>Hotel Address</th>
-                                <th>Hotel Description</th>
+                                <th>Hotel City</th>
                                 <th>Is Active</th>
                                 <th>Actions</th>
                             </tr>
@@ -41,26 +40,40 @@
 
 @section Scripts {
 
-    <script src="~/js/Source.js"></script>
+    <script src="~/js/Hotel.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.6/datatables.min.js"></script>
 
     <!-- Modal -->
-    <div class="modal fade" id="addSourceModal" tabindex="-1" aria-labelledby="addSourceModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addHotelModal" tabindex="-1" aria-labelledby="addHotelModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addSourceModalLabel">Add Source Name</h5>
+                    <h5 class="modal-title" id="addHotelModalLabel">Add Hotel</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
                     <form id="form">
                         @Html.AntiForgeryToken()
-                        <input type="hidden" asp-for="SourceId" />
+                        <input type="hidden" asp-for="HotelId" />
+
                         <div class="mb-3">
-                            <label class="form-label" asp-for="SourceName">Source Name:</label>
-                            <input type="text" class="form-control" id="SourceName" name="SourceName" required>
-                            <span class="text-danger" id="sourceError"></span>
+                            <label class="form-label" asp-for="HotelImage">Hotel Image:</label>
+                            <input type="file" class="form-control" id="HotelImage" name="HotelImage" required>
+                            <span class="text-danger" id="hotelError"></span>
+
+                            <label class="form-label" asp-for="HotelName">Hotel Name:</label>
+                            <input type="text" class="form-control" id="HotelName" name="HotelName" required>
+                            <span class="text-danger" id="hotelError"></span>
+
+                            <label class="form-label" asp-for="HotelPhone">Hotel Phone No. :</label>
+                            <input type="text" class="form-control" id="HotelPhone" name="HotelPhone" required>
+                            <span class="text-danger" id="hotelError"></span>
+
+                            <label class="form-label" asp-for="CityId">Hotel City</label>
+                            <input type="text" class="form-control" id="HotelCity" name="HotelCity" required>
+                            <span class="text-danger" id="hotelError"></span>
+
                             <div class="col-md-4 mt-1">
                                 <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
                                     <br />

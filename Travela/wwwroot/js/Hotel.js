@@ -8,7 +8,7 @@
 
     $('#btnMdlSave').click(function () {
 
-        var sourceName = $('#HotelName').val();
+        var hotelName = $('#HotelName').val();
 
         if (!hotelName) {
             $('#hotelError').text('Please enter Hotel Name.');
@@ -16,6 +16,9 @@
         }
 
         var formdata = new FormData($('#form')[0]);
+        var fileInput = $('#HotelImage')[0].files[0];
+
+        formdata.append('HotelImage', fileInput);
 
         $.ajax({
             type: "POST",
@@ -80,6 +83,37 @@ function EditModel(sourceId) {
     });
 }
 
+function BindCityData() {
+    // Populate city dropdown
+    $.ajax({
+        type: "GET",
+        url: "/City/CityList", // URL to fetch city data
+        dataType: 'json',
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                // Clear existing options
+                $('#HotelCity').empty();
+
+                // Add default option
+                $('#HotelCity').append('<option value="">Select City</option>');
+
+                // Iterate over city data and add options to the dropdown
+                $.each(data, function (index, city) {
+                    console.log(city);
+                    $('#HotelCity').append('<option value="' + city.cityId + '">' + city.cityName + '</option>');
+                });
+            } else {
+                // Handle empty or no data
+                $('#HotelCity').append('<option value="">No data available</option>');
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching city data: ", textStatus, errorThrown);
+            alert("An error occurred while fetching city data.");
+        }
+    });
+}
+
 function DeleteData(hotelId, hotelName) {
     var row = $(this).closest('tr');
 
@@ -100,6 +134,7 @@ function DeleteData(hotelId, hotelName) {
 }
 
 function BindGrid() {
+    //debugger;
     if ($.fn.DataTable.isDataTable("#tbldata")) {
         $('#tbldata').DataTable().clear().destroy();
     }
@@ -138,24 +173,22 @@ function BindGrid() {
         }],
         "columns": [
             {
-                name: "Hotel Id",
+                data: null,
+                name: "Sr. No.",
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }, autoWidth: true
             },
             { data: "hotelName", name: "Hotel Name", autoWidth: true },
             { data: "hotelPhone", name: "Hotel Phone", autoWidth: true },
-            { data: "hotelEmail", name: "Hotel Email", autoWidth: true },
-            { data: "hotelAddress", name: "Hotel Address", autoWidth: true },
-            //{ data: "hotelCity", name: "Hotel City", autoWidth: true },
-            //{ data: "hotelState", name: "Hotel State", autoWidth: true },
-            //{ data: "hotelCountry", name: "Hotel Country", autoWidth: true },
-            //{ data: "hotelZip", name: "Hotel Zip", autoWidth: true },
-            { data: "hotelDescription", name: "Hotel Description", autoWidth: true },
+            { data: "cityId", name: "City", autoWidth: true },
+            //{ data: "hotelAddress", name: "Hotel Address", autoWidth: true },
+            { data: "hotelImage", name: "Hotel Image", autoWidth: true },
+       /*     { data: "hotelDescription", name: "Hotel Description", autoWidth: true },*/
             {
-                data: null,
+                data: "isActive",
                 render: function (data, type, row) {
-                    return row.isActive ? yesBadge : noBadge;
+                    return data ? yesBadge : noBadge;
                 }, autoWidth: true
             },
             {

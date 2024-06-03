@@ -65,12 +65,10 @@ namespace Travela.Services.Service
 
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
                 dictionary.Add("Id", model.hotelId);
+                dictionary.Add("HotelImage", model.hotelImage);
                 dictionary.Add("HotelName", model.hotelName);
                 dictionary.Add("HotelPhone", model.hotelPhone);
-                dictionary.Add("HotelEmail", model.hotelEmail);
-                dictionary.Add("HotelAddress", model.hotelAddress);
-                dictionary.Add("HotelImage", model.hotelImage);
-                dictionary.Add("HotelDescription", model.hotelDescription);
+                dictionary.Add("CityId", model.cityId);
                 dictionary.Add("IsActive", model.isActive);
 
                 var data = dapperConnection.GetListResult<long>("InsertOrUpdateHotel", CommandType.StoredProcedure, dictionary).FirstOrDefault();
@@ -120,7 +118,6 @@ namespace Travela.Services.Service
             }
             return response;
         }
-
 
         #endregion
 

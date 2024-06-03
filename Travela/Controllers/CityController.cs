@@ -23,6 +23,14 @@ namespace Travela.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("/City/CityList")]
+        public IActionResult CityList()
+        {
+            var city = cityService.GetAll();
+            return Json(city);
+        }
+
         [HttpPost]
         [Route("/City/GetCityData")]
         public JsonResult GetCityData()

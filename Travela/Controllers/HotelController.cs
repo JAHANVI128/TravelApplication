@@ -89,9 +89,7 @@ namespace Travela.Controllers
                 model.hotelId = HotelRequest.HotelId;
                 model.hotelName = HotelRequest.HotelName;
                 model.hotelPhone = HotelRequest.HotelPhone;
-                model.hotelEmail = HotelRequest.HotelEmail;
-                model.hotelAddress = HotelRequest.HotelAddress;
-                model.hotelDescription = HotelRequest.HotelDescription;
+                model.cityId = HotelRequest.CityId;
                 model.isActive = HotelRequest.IsActive;
 
                 var result = hotelService.AddOrUpdate(model);
@@ -123,4 +121,4 @@ namespace Travela.Controllers
             return objreturn;
         }
     }
-}
+}                                   
