@@ -1,12 +1,20 @@
 ﻿$(document).ready(function () {
     console.log("Document ready");
     BindGrid();
+    BindCityData();
 
     $('#addHotelBtn').click(function () {
         $('#addHotelModal').modal('show');
     });
 
     $('#btnMdlSave').click(function () {
+
+        var hotelImg = $("#hotelImgError").val();
+
+        if (!hotelImg) {
+            $('#hotelImgError').text('Please select Hotel Image.');
+            return;
+        }
 
         var hotelName = $('#HotelName').val();
 
@@ -92,19 +100,19 @@ function BindCityData() {
         success: function (data) {
             if (data != null && data.length > 0) {
                 // Clear existing options
-                $('#HotelCity').empty();
+                $('#CityId').empty();
 
                 // Add default option
-                $('#HotelCity').append('<option value="">Select City</option>');
+                $('#CityId').append('<option value="">Select City</option>');
 
                 // Iterate over city data and add options to the dropdown
                 $.each(data, function (index, city) {
                     console.log(city);
-                    $('#HotelCity').append('<option value="' + city.cityId + '">' + city.cityName + '</option>');
+                    $('#CityId').append('<option value="' + city.cityId + '">' + city.cityName + '</option>');
                 });
             } else {
                 // Handle empty or no data
-                $('#HotelCity').append('<option value="">No data available</option>');
+                $('#CityId').append('<option value="">No data available</option>');
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -179,12 +187,10 @@ function BindGrid() {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }, autoWidth: true
             },
+            { data: "hotelImage", name: "Hotel Image", autoWidth: true },
             { data: "hotelName", name: "Hotel Name", autoWidth: true },
             { data: "hotelPhone", name: "Hotel Phone", autoWidth: true },
-            { data: "cityId", name: "City", autoWidth: true },
-            //{ data: "hotelAddress", name: "Hotel Address", autoWidth: true },
-            { data: "hotelImage", name: "Hotel Image", autoWidth: true },
-       /*     { data: "hotelDescription", name: "Hotel Description", autoWidth: true },*/
+            { data: "strcity", name: "City", autoWidth: true },
             {
                 data: "isActive",
                 render: function (data, type, row) {

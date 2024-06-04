@@ -11,8 +11,9 @@ namespace Travela.Model.Service
         public int hotelId { get; set; }
         public string hotelImage { get; set; }
         public string hotelName { get; set; }
-        public string hotelPhone { get; set; }
-        public string cityId { get; set; }
+        public int hotelPhone { get; set; }
+        public int cityId { get; set; }
+        public string strcity { get; set; }
         public bool isActive { get; set; } = true;
         public bool isDelete { get; set; }
         public string createdBy { get; set; }

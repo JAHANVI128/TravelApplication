@@ -22,8 +22,8 @@
                                 <th>Sr no.</th>
                                 <th>Hotel Image</th>
                                 <th>Hotel Name</th>
-                                <th>Hotel Phone</th>
-                                <th>Hotel City</th>
+                                <th>Hotel Phone No. </th>
+                                <th>City</th>
                                 <th>Is Active</th>
                                 <th>Actions</th>
                             </tr>
@@ -33,7 +33,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -58,28 +57,36 @@
                         <input type="hidden" asp-for="HotelId" />
 
                         <div class="mb-3">
+                            <label class="form-label" asp-for="HotelName">Hotel Name:</label>
+                            <input type="text" @* class="form-control" *@ id="HotelName" name="HotelName" required>
+                            <span class="text-danger" id="hotelError"></span>
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label" asp-for="HotelImage">Hotel Image:</label>
                             <input type="file" class="form-control" id="HotelImage" name="HotelImage" required>
-                            <span class="text-danger" id="hotelError"></span>
+                            <span class="text-danger" id="hotelImgError"></span>
+                        </div>
 
-                            <label class="form-label" asp-for="HotelName">Hotel Name:</label>
-                            <input type="text" class="form-control" id="HotelName" name="HotelName" required>
-                            <span class="text-danger" id="hotelError"></span>
-
+                        <div class="mb-3">
                             <label class="form-label" asp-for="HotelPhone">Hotel Phone No. :</label>
                             <input type="text" class="form-control" id="HotelPhone" name="HotelPhone" required>
                             <span class="text-danger" id="hotelError"></span>
+                        </div>
 
-                            <label class="form-label" asp-for="CityId">Hotel City</label>
-                            <input type="text" class="form-control" id="HotelCity" name="HotelCity" required>
+                        <div class="mb-3">
+                            <label class="form-label" for="CityId">City</label>
+                            <select asp-for="CityId" class="form-control">
+                                <option value="">Select City</option>
+                            </select>
                             <span class="text-danger" id="hotelError"></span>
+                        </div>
 
-                            <div class="col-md-4 mt-1">
-                                <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-                                    <br />
-                                    <input type="checkbox" class="custom-control-input" asp-for="IsActive" />
-                                    <label class="custom-control-label float-left">Is Active</label>
-                                </div>
+                         <div class="col-md-4 mt-1">
+                            <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                <br />
+                                <input type="checkbox" class="custom-control-input" asp-for="IsActive" />
+                                <label class="custom-control-label float-left">Is Active</label>
                             </div>
                         </div>
                     </form>

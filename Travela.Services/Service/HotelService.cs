@@ -65,7 +65,7 @@ namespace Travela.Services.Service
 
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
                 dictionary.Add("Id", model.hotelId);
-                dictionary.Add("HotelImage", model.hotelImage);
+                dictionary.Add("HotelImg", model.hotelImage);
                 dictionary.Add("HotelName", model.hotelName);
                 dictionary.Add("HotelPhone", model.hotelPhone);
                 dictionary.Add("CityId", model.cityId);
