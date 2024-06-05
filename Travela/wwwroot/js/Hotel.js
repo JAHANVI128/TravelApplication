@@ -8,12 +8,13 @@
     });
 
     $('#btnMdlSave').click(function () {
-
-        var hotelImg = $("#hotelImgError").val();
+        var hotelImg = $("#HotelImage").val();
 
         if (!hotelImg) {
             $('#hotelImgError').text('Please select Hotel Image.');
             return;
+        } else {
+            $('#hotelImgError').text('');
         }
 
         var hotelName = $('#HotelName').val();
@@ -21,6 +22,8 @@
         if (!hotelName) {
             $('#hotelError').text('Please enter Hotel Name.');
             return;
+        } else {
+            $('#hotelError').text('');
         }
 
         var formdata = new FormData($('#form')[0]);
@@ -41,8 +44,7 @@
                     $('#addHotelModal').modal('hide');
                     BindGrid();
                     $('#form')[0].reset();
-                }
-                else {
+                } else {
                     alert("Record not saved, Try again", "", "error");
                 }
             },
@@ -51,14 +53,62 @@
             }
         });
     });
+
+    let roomCounter = 1;
+
+    $('#addRoomBtn').click(function () {
+        var roomType = $('#RoomType').val();
+        var roomNumber = $('#RoomNumber').val();
+        var amount = $('#Amount').val();
+        var isValid = true;
+
+        if (!roomType) {
+            $('#roomTypeError').text('Please enter Room Type.');
+            isValid = false;
+        } else {
+            $('#roomTypeError').text('');
+        }
+
+        if (!roomNumber) {
+            $('#roomNumberError').text('Please enter Room Number.');
+            isValid = false;
+        } else {
+            $('#roomNumberError').text('');
+        }
+
+        if (!amount) {
+            $('#amountError').text('Please enter Amount.');
+            isValid = false;
+        } else if (isNaN(amount)) {
+            $('#amountError').text('Please enter a valid Amount.');
+            isValid = false;
+        } else {
+            $('#amountError').text('');
+        }
+
+        if (isValid) {
+            $('#roomTable tbody').append(`
+                <tr>
+                    <td>${roomCounter++}</td>
+                    <td>${roomType}</td>
+                    <td>${roomNumber}</td>
+                    <td>${amount}</td>
+                </tr>
+            `);
+
+            // Clear inputs after adding
+            $('#RoomType').val('');
+            $('#RoomNumber').val('');
+            $('#Amount').val('');
+        }
+    });
 });
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function EditModel(sourceId) {
-
+function EditModel(hotelId) {
     $.ajax({
         type: "GET",
         url: "/Hotel/EditHotel",
@@ -72,12 +122,10 @@ function EditModel(sourceId) {
                 var dataList = data.result;
 
                 Object.keys(dataList).forEach(function (key) {
-
                     if ($('#' + capitalizeFirstLetter(key)) != null && $('#' + key) != undefined) {
                         if (key.includes("is")) {
                             $('#' + capitalizeFirstLetter(key)).prop('checked', dataList[key]);
-                        }
-                        else {
+                        } else {
                             $('#' + capitalizeFirstLetter(key)).val(dataList[key]);
                         }
                     }
@@ -142,7 +190,7 @@ function DeleteData(hotelId, hotelName) {
 }
 
 function BindGrid() {
-    //debugger;
+
     if ($.fn.DataTable.isDataTable("#tbldata")) {
         $('#tbldata').DataTable().clear().destroy();
     }
@@ -150,10 +198,10 @@ function BindGrid() {
     var noBadge = '<td><span class="badge badge-secondary mt-1">No</span></td>';
 
     $("#tbldata").DataTable({
-        "processing": true, // for show progress bar
-        "serverSide": false, // for process server side
-        "filter": true, // this is for disable filter (search box)
-        "orderMulti": false, // for disable multiple column at once
+        "processing": true,
+        "serverSide": false,
+        "filter": true,
+        "orderMulti": false,
         "initComplete": function () {
             var api = this.api();
             var searchInput = $('.dataTables_filter input');
@@ -187,7 +235,14 @@ function BindGrid() {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }, autoWidth: true
             },
-            { data: "hotelImage", name: "Hotel Image", autoWidth: true },
+            {
+                data: "hotelImage",
+                name: "Hotel Image",
+                autoWidth: true,
+                render: function (data, type, row) {
+                    return '<img src="' + data + '" alt="Hotel Image"  style="width: 100px; height: 100px; object-fit: cover;"/>';
+                }
+            },
             { data: "hotelName", name: "Hotel Name", autoWidth: true },
             { data: "hotelPhone", name: "Hotel Phone", autoWidth: true },
             { data: "strcity", name: "City", autoWidth: true },

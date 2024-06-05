@@ -1,10 +1,19 @@
-﻿@using Travela.Models.Entities;
+﻿ @using Travela.Models.Entities;
 @model HotelRequest;
 @{
     ViewData["HeaderName"] = "Hotel List";
     ViewData["Title"] = "Hotel Master";
     ViewData["MenuName"] = "Hotels";
 }
+<style>
+    .modal-dialog {
+        max-width: 1200px !important;
+    }
+
+    .modal-body .row {
+        margin-bottom: 15px;
+    }
+</style>
 
 <div class="row">
     <div class="col-12">
@@ -56,37 +65,81 @@
                         @Html.AntiForgeryToken()
                         <input type="hidden" asp-for="HotelId" />
 
-                        <div class="mb-3">
-                            <label class="form-label" asp-for="HotelName">Hotel Name:</label>
-                            <input type="text" @* class="form-control" *@ id="HotelName" name="HotelName" required>
-                            <span class="text-danger" id="hotelError"></span>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" asp-for="HotelName">Hotel Name:</label>
+                                <input type="text" class="form-control" id="HotelName" name="HotelName" required>
+                                <span class="text-danger" id="hotelError"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" asp-for="HotelImage">Hotel Image:</label>
+                                <input type="file" class="form-control" id="HotelImage" name="HotelImage" required>
+                                <span class="text-danger" id="hotelImgError"></span>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" asp-for="HotelImage">Hotel Image:</label>
-                            <input type="file" class="form-control" id="HotelImage" name="HotelImage" required>
-                            <span class="text-danger" id="hotelImgError"></span>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" asp-for="HotelPhone">Hotel Phone No. :</label>
+                                <input type="text" class="form-control" id="HotelPhone" name="HotelPhone" required>
+                                <span class="text-danger" id="hotelError"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="CityId">City</label>
+                                <select asp-for="CityId">
+                                    <option value="">Select City</option>
+                                </select>
+                                <span class="text-danger" id="hotelError"></span>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" asp-for="HotelPhone">Hotel Phone No. :</label>
-                            <input type="text" class="form-control" id="HotelPhone" name="HotelPhone" required>
-                            <span class="text-danger" id="hotelError"></span>
+                        <div class="row">
+                            <div class="col-md-4 mt-1">
+                                <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                    <input type="checkbox" class="custom-control-input" asp-for="IsActive" />
+                                    <label class="custom-control-label float-left">Is Active</label>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" for="CityId">City</label>
-                            <select asp-for="CityId" class="form-control">
-                                <option value="">Select City</option>
-                            </select>
-                            <span class="text-danger" id="hotelError"></span>
+                        <div class="row mt-4">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label" for="RoomType">Room Type</label>
+                                <input type="text" class="form-control" id="RoomType" name="RoomType" required>
+                                <span class="text-danger" id="roomTypeError"></span>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label" for="RoomNumber">Room Number</label>
+                                <input type="text" class="form-control" id="RoomNumber" name="RoomNumber" required>
+                                <span class="text-danger" id="roomNumberError"></span>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label" for="Amount">Amount</label>
+                                <input type="text" class="form-control" id="Amount" name="Amount" required>
+                                <span class="text-danger" id="amountError"></span>
+                            </div>
                         </div>
 
-                         <div class="col-md-4 mt-1">
-                            <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
-                                <br />
-                                <input type="checkbox" class="custom-control-input" asp-for="IsActive" />
-                                <label class="custom-control-label float-left">Is Active</label>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <button type="button" class="btn btn-outline-primary float-right" id="addRoomBtn">Add Room</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id="roomTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Room Type</th>
+                                            <th>Room Number</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </form>
@@ -98,4 +151,4 @@
             </div>
         </div>
     </div>
-}
+}  
