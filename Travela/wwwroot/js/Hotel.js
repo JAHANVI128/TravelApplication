@@ -8,14 +8,6 @@
     });
 
     $('#btnMdlSave').click(function () {
-        var hotelImg = $("#HotelImage").val();
-
-        if (!hotelImg) {
-            $('#hotelImgError').text('Please select Hotel Image.');
-            return;
-        } else {
-            $('#hotelImgError').text('');
-        }
 
         var hotelName = $('#HotelName').val();
 
@@ -24,6 +16,15 @@
             return;
         } else {
             $('#hotelError').text('');
+        }
+
+        var hotelImg = $("#HotelImage").val();
+
+        if (!hotelImg) {
+            $('#hotelImgError').text('Please select Hotel Image.');
+            return;
+        } else {
+            $('#hotelImgError').text('');
         }
 
         var formdata = new FormData($('#form')[0]);

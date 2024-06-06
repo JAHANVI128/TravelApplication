@@ -18,5 +18,18 @@ namespace Travela.Model.Service
         public bool isDelete { get; set; }
         public string createdBy { get; set; }
         public DateTime createdDate { get; set; }
+        public List<HotelRoomModel> roomList { get; set; }
+    }
+
+    public class HotelRoomModel
+    {
+        public int hotelRoomId { get; set; }
+        public int roomTypeId { get; set; }
+        public int roomNo { get; set; }
+        public decimal amount { get; set; }
+        public bool isActive { get; set; } = true;
+        public bool isDelete { get; set; }
+        public string createdBy { get; set; }
+        public DateTime createdDate { get; set; }
     }
 }

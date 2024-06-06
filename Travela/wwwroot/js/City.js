@@ -148,9 +148,6 @@ function BindGrid() {
                 data: null,
                 render: function (data, type, row) {
                     return row.isActive ? yesBadge : noBadge;
-
-
-
                 }, autoWidth: true
             },
             {
@@ -164,4 +161,3 @@ function BindGrid() {
         ]
     });
 }
-

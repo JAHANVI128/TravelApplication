@@ -13,7 +13,6 @@ namespace Travela.Services.Service
 {
     public class HotelService : IHotelService
     {
-
         #region Constants
         private readonly DapperConnection dapperConnection;
         #endregion
@@ -62,16 +61,34 @@ namespace Travela.Services.Service
             JsonResponseModel response = new JsonResponseModel();
             try
             {
-
-                Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                dictionary.Add("Id", model.hotelId);
-                dictionary.Add("HotelImg", model.hotelImage);
-                dictionary.Add("HotelName", model.hotelName);
-                dictionary.Add("HotelPhone", model.hotelPhone);
-                dictionary.Add("CityId", model.cityId);
-                dictionary.Add("IsActive", model.isActive);
+                Dictionary<string, object> dictionary = new Dictionary<string, object>
+                {
+                    { "Id", model.hotelId },
+                    { "HotelImg", model.hotelImage },
+                    { "HotelName", model.hotelName },
+                    { "HotelPhone", model.hotelPhone },
+                    { "CityId", model.cityId },
+                    { "IsActive", model.isActive }
+                };
 
                 var data = dapperConnection.GetListResult<long>("InsertOrUpdateHotel", CommandType.StoredProcedure, dictionary).FirstOrDefault();
+
+                if (data > 0 && model.roomList != null)
+                {
+                    foreach (var room in model.roomList)
+                    {
+                        var roomDictionary = new Dictionary<string, object>
+                        {
+                            { "p_HotelId", data },
+                            { "p_RoomTypeId", room.roomTypeId },
+                            { "p_RoomNo", room.roomNo },
+                            { "p_Amount", room.amount },
+                            { "p_IsActive", room.isActive }
+                        };
+
+                        dapperConnection.ExecuteWithoutResult("InsertOrUpdateHotelRooms", CommandType.StoredProcedure, roomDictionary);
+                    }
+                }
 
                 if (model.hotelId == 0)
                 {
@@ -102,10 +119,14 @@ namespace Travela.Services.Service
             JsonResponseModel response = new JsonResponseModel();
             try
             {
-                Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                dictionary.Add("Id", HotelId);
+                Dictionary<string, object> dictionary = new Dictionary<string, object>
+                {
+                    { "Id", HotelId }
+                };
 
-                dapperConnection.GetListResult<int>("RemoveHotel", CommandType.StoredProcedure, dictionary);
+                dapperConnection.ExecuteWithoutResult("RemoveRooms", CommandType.StoredProcedure, dictionary);
+                dapperConnection.ExecuteWithoutResult("RemoveHotel", CommandType.StoredProcedure, dictionary);
+
                 response.Success = true;
                 response.isError = false;
                 response.Message = "Hotel deleted successfully.";

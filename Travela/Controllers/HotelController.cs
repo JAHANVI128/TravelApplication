@@ -4,6 +4,7 @@ using Travela.IService.Service;
 using Travela.Model.Service;
 using Travela.Model.System;
 using Travela.Models.Entities;
+using System.IO;
 
 namespace Travela.Controllers
 {
@@ -35,7 +36,7 @@ namespace Travela.Controllers
             catch (Exception ex)
             {
                 ErrorLogger.Error(ex.Message, ex.ToString(), ControllerContext.ActionDescriptor.ControllerName, ControllerContext.ActionDescriptor.ActionName, ControllerContext.HttpContext.Request.Method);
-                return Json("");
+                return Json(new { recordsFiltered = 0, recordsTotal = 0, data = new List<HotelModel>(), error = ex.Message });
             }
         }
 
@@ -50,18 +51,21 @@ namespace Travela.Controllers
                 if (hotel != null)
                 {
                     objreturn.result = hotel;
-                    return objreturn;
+                    objreturn.Success = true;
                 }
                 else
                 {
-                    return objreturn;
+                    objreturn.Message = "Hotel not found.";
+                    objreturn.Success = false;
                 }
             }
             catch (Exception ex)
             {
                 objreturn.isError = true;
-                return objreturn;
+                objreturn.Message = "An error occurred: " + ex.Message;
+                ErrorLogger.Error(ex.Message, ex.ToString(), ControllerContext.ActionDescriptor.ControllerName, ControllerContext.ActionDescriptor.ActionName, ControllerContext.HttpContext.Request.Method);
             }
+            return objreturn;
         }
 
         [HttpPost]
@@ -74,7 +78,6 @@ namespace Travela.Controllers
                 HotelModel model = new HotelModel();
 
                 // Check if an image file is uploaded
-
                 if (HotelRequest.HotelImage != null && HotelRequest.HotelImage.Length > 0)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(HotelRequest.HotelImage.FileName);
@@ -91,16 +94,27 @@ namespace Travela.Controllers
                 model.hotelPhone = HotelRequest.HotelPhone;
                 model.cityId = HotelRequest.CityId;
                 model.isActive = HotelRequest.IsActive;
+                model.roomList = HotelRequest.RoomList.Select(r => new HotelRoomModel
+                {
+                    hotelRoomId = r.HotelRoomId,
+                    roomTypeId = r.RoomTypeId,
+                    roomNo = r.RoomNo,
+                    amount = r.Amount,
+                    isActive = r.IsActive
+                }).ToList();
 
                 var result = hotelService.AddOrUpdate(model);
 
                 obj.result = result.result;
                 obj.Message = "Record saved successfully";
+                obj.Success = result.Success;
             }
             catch (Exception ex)
             {
                 obj.result = false;
                 obj.Message = "An error occurred: " + ex.Message;
+                obj.Success = false;
+                ErrorLogger.Error(ex.Message, ex.ToString(), ControllerContext.ActionDescriptor.ControllerName, ControllerContext.ActionDescriptor.ActionName, ControllerContext.HttpContext.Request.Method);
             }
             return obj;
         }
@@ -116,9 +130,11 @@ namespace Travela.Controllers
             }
             catch (Exception ex)
             {
-                return objreturn;
+                objreturn.isError = true;
+                objreturn.Message = "An error occurred: " + ex.Message;
+                ErrorLogger.Error(ex.Message, ex.ToString(), ControllerContext.ActionDescriptor.ControllerName, ControllerContext.ActionDescriptor.ActionName, ControllerContext.HttpContext.Request.Method);
             }
             return objreturn;
         }
     }
-}                                   
+}
