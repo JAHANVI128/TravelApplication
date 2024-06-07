@@ -27,6 +27,24 @@
             $('#hotelImgError').text('');
         }
 
+        var hotelPhone = $('#HotelPhone').val();
+
+        if (!hotelPhone) {
+            $('#hotelPhoneError').text('Please enter Hotel Phone.');
+            return;
+        } else {
+            $('#hotelPhoneError').text('');
+        }
+
+        var cityId = $('#CityId').val();
+
+        if (!cityId) {
+            $('#cityIdError').text('Please select a City.');
+            return;
+        } else {
+            $('#cityIdError').text('');
+        }
+
         var formdata = new FormData($('#form')[0]);
         var fileInput = $('#HotelImage')[0].files[0];
 
@@ -94,6 +112,7 @@
                     <td>${roomType}</td>
                     <td>${roomNumber}</td>
                     <td>${amount}</td>
+                    <td><button type="button" class="btn btn-outline-danger btn-sm delete-room">Delete</button></td>
                 </tr>
             `);
 
@@ -102,6 +121,12 @@
             $('#RoomNumber').val('');
             $('#Amount').val('');
         }
+    });
+
+    // Event delegation to handle dynamically added delete buttons
+    $('#roomTable tbody').on('click', '.delete-room', function () {
+        $(this).closest('tr').remove();
+        roomCounter--; // Decrement room counter
     });
 });
 

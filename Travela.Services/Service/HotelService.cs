@@ -85,7 +85,6 @@ namespace Travela.Services.Service
                             { "p_Amount", room.amount },
                             { "p_IsActive", room.isActive }
                         };
-
                         dapperConnection.ExecuteWithoutResult("InsertOrUpdateHotelRooms", CommandType.StoredProcedure, roomDictionary);
                     }
                 }
