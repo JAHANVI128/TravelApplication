@@ -5,6 +5,7 @@ using Travela.Model.Service;
 using Travela.Model.System;
 using Travela.Models.Entities;
 using System.IO;
+using Travela.Services.Service;
 
 namespace Travela.Controllers
 {
@@ -121,20 +122,10 @@ namespace Travela.Controllers
 
         [HttpPost]
         [Route("/Hotel/DeleteHotel")]
-        public JsonResponseModel DeleteHotel(int hotelId)
+        public JsonResult DeleteHotel(long hotelId)
         {
-            JsonResponseModel objreturn = new JsonResponseModel();
-            try
-            {
-                objreturn = hotelService.Delete(hotelId);
-            }
-            catch (Exception ex)
-            {
-                objreturn.isError = true;
-                objreturn.Message = "An error occurred: " + ex.Message;
-                ErrorLogger.Error(ex.Message, ex.ToString(), ControllerContext.ActionDescriptor.ControllerName, ControllerContext.ActionDescriptor.ActionName, ControllerContext.HttpContext.Request.Method);
-            }
-            return objreturn;
+            var result = hotelService.Delete(hotelId);
+            return Json(result);
         }
     }
 }

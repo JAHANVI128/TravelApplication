@@ -113,18 +113,15 @@ namespace Travela.Services.Service
             return response;
         }
 
-        public JsonResponseModel Delete(long HotelId)
+        public JsonResponseModel Delete(long hotelId)
         {
             JsonResponseModel response = new JsonResponseModel();
             try
             {
-                Dictionary<string, object> dictionary = new Dictionary<string, object>
-                {
-                    { "Id", HotelId }
-                };
+                var parameters = new Dictionary<string, object> { { "Id", hotelId } };
 
-                dapperConnection.ExecuteWithoutResult("RemoveRooms", CommandType.StoredProcedure, dictionary);
-                dapperConnection.ExecuteWithoutResult("RemoveHotel", CommandType.StoredProcedure, dictionary);
+                dapperConnection.ExecuteWithoutResult("RemoveRooms", CommandType.StoredProcedure, parameters);
+                dapperConnection.ExecuteWithoutResult("RemoveHotel", CommandType.StoredProcedure, parameters);
 
                 response.Success = true;
                 response.isError = false;
@@ -132,9 +129,10 @@ namespace Travela.Services.Service
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error($"Error deleting Source with ID {HotelId}.", ex.ToString(), "HotelService", "Delete");
+                ErrorLogger.Error($"Error deleting hotel with ID {hotelId}.", ex.ToString(), "HotelService", "Delete");
                 response.Success = false;
-                response.Message = "An error occurred while deleting hotel.";
+                response.isError = true;
+                response.Message = "An error occurred while deleting the hotel.";
             }
             return response;
         }

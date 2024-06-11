@@ -8,69 +8,67 @@
     });
 
     $('#btnMdlSave').click(function () {
-
         var hotelName = $('#HotelName').val();
+        var hotelImg = $("#HotelImage").val();
+        var hotelPhone = $('#HotelPhone').val();
+        var cityId = $('#CityId').val();
+        var isValid = true;
 
         if (!hotelName) {
             $('#hotelError').text('Please enter Hotel Name.');
-            return;
+            isValid = false;
         } else {
             $('#hotelError').text('');
         }
 
-        var hotelImg = $("#HotelImage").val();
-
         if (!hotelImg) {
             $('#hotelImgError').text('Please select Hotel Image.');
-            return;
+            isValid = false;
         } else {
             $('#hotelImgError').text('');
         }
 
-        var hotelPhone = $('#HotelPhone').val();
-
         if (!hotelPhone) {
             $('#hotelPhoneError').text('Please enter Hotel Phone.');
-            return;
+            isValid = false;
         } else {
             $('#hotelPhoneError').text('');
         }
 
-        var cityId = $('#CityId').val();
-
         if (!cityId) {
             $('#cityIdError').text('Please select a City.');
-            return;
+            isValid = false;
         } else {
             $('#cityIdError').text('');
         }
 
-        var formdata = new FormData($('#form')[0]);
-        var fileInput = $('#HotelImage')[0].files[0];
+        if (isValid) {
+            var formdata = new FormData($('#form')[0]);
+            var fileInput = $('#HotelImage')[0].files[0];
+            formdata.append('HotelImage', fileInput);
 
-        formdata.append('HotelImage', fileInput);
-
-        $.ajax({
-            type: "POST",
-            url: "/Hotel/AddOrUpdateHotel",
-            data: formdata,
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            success: function (data) {
-                if (data != null && data != undefined) {
-                    alert(data.message);
-                    $('#addHotelModal').modal('hide');
-                    BindGrid();
-                    $('#form')[0].reset();
-                } else {
-                    alert("Record not saved, Try again", "", "error");
+            $.ajax({
+                type: "POST",
+                url: "/Hotel/AddOrUpdateHotel",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function (data) {
+                    if (data != null && data != undefined) {
+                        alert(data.message);
+                        $('#addHotelModal').modal('hide');
+                        BindGrid();
+                        $('#form')[0].reset();
+                    } else {
+                        alert("Record not saved, Try again", "", "error");
+                    }
+                },
+                error: function (ex) {
+                    alert("Something went wrong, Try again!", "", "error");
                 }
-            },
-            error: function (ex) {
-                alert("Something went wrong, Try again!", "", "error");
-            }
-        });
+            });
+        }
     });
 
     let roomCounter = 1;
@@ -130,29 +128,27 @@
     });
 });
 
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 function EditModel(hotelId) {
     $.ajax({
         type: "GET",
         url: "/Hotel/EditHotel",
         data: { hotelId: hotelId },
-
         success: function (data) {
-            debugger;
             if (data.isError) {
                 alert(data.strMessage);
             } else {
                 var dataList = data.result;
 
                 Object.keys(dataList).forEach(function (key) {
-                    if ($('#' + capitalizeFirstLetter(key)) != null && $('#' + key) != undefined) {
-                        if (key.includes("is")) {
-                            $('#' + capitalizeFirstLetter(key)).prop('checked', dataList[key]);
+                    var element = $('#' + key.charAt(0).toUpperCase() + key.slice(1));
+                    if (element.length) {
+                        if (element.attr('type') === 'checkbox') {
+                            element.prop('checked', dataList[key]);
+                        } else if (element.attr('type') === 'file') {
+                            // Skip setting value for file input
+                            console.log('File input detected, skipping value set for', key);
                         } else {
-                            $('#' + capitalizeFirstLetter(key)).val(dataList[key]);
+                            element.val(dataList[key]);
                         }
                     }
                 });
@@ -160,7 +156,7 @@ function EditModel(hotelId) {
             $('#addHotelModal').modal('show');
         },
         error: function (ex) {
-            ShowMessage("Something went wrong. Please try again.", "", "error");
+            alert("Something went wrong. Please try again.");
         }
     });
 }
@@ -197,16 +193,19 @@ function BindCityData() {
 }
 
 function DeleteData(hotelId, hotelName) {
-    var row = $(this).closest('tr');
-
     if (confirm('Are you sure you want to delete "' + hotelName + '" as a hotel city?')) {
         $.ajax({
             type: "POST",
             url: "/Hotel/DeleteHotel",
             data: { hotelId: hotelId },
+            dataType: "json", // Expecting JSON response
             success: function (result) {
-                BindGrid();
-                alert('Hotel deleted successfully.');
+                if (result.isError) {
+                    alert(result.Message);
+                } else {
+                    BindGrid();
+                    alert('Hotel deleted successfully.');
+                }
             },
             error: function () {
                 alert("An error occurred while deleting the hotel.");
@@ -216,7 +215,6 @@ function DeleteData(hotelId, hotelName) {
 }
 
 function BindGrid() {
-
     if ($.fn.DataTable.isDataTable("#tbldata")) {
         $('#tbldata').DataTable().clear().destroy();
     }
