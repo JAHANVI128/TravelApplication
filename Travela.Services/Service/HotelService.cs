@@ -120,8 +120,8 @@ namespace Travela.Services.Service
             {
                 var parameters = new Dictionary<string, object> { { "Id", hotelId } };
 
-                dapperConnection.ExecuteWithoutResult("RemoveRooms", CommandType.StoredProcedure, parameters);
                 dapperConnection.ExecuteWithoutResult("RemoveHotel", CommandType.StoredProcedure, parameters);
+                //dapperConnection.ExecuteWithoutResult("RemoveRooms", CommandType.StoredProcedure, parameters);
 
                 response.Success = true;
                 response.isError = false;
