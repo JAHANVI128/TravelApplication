@@ -6,6 +6,7 @@ using Travela.Model.System;
 using Travela.Models.Entities;
 using System.IO;
 using Travela.Services.Service;
+using Newtonsoft.Json;
 
 namespace Travela.Controllers
 {
@@ -20,6 +21,11 @@ namespace Travela.Controllers
 
         [HttpGet]
         public IActionResult HotelMaster()
+        {
+            return View();
+        }
+
+        public IActionResult HotelRoomMaster()
         {
             return View();
         }
@@ -77,8 +83,9 @@ namespace Travela.Controllers
             try
             {
                 HotelModel model = new HotelModel();
+                var roomListJson = Request.Form["RoomList"];
+                HotelRequest.RoomList = JsonConvert.DeserializeObject<List<HotelRoomRequest>>(roomListJson);
 
-                // Check if an image file is uploaded
                 if (HotelRequest.HotelImage != null && HotelRequest.HotelImage.Length > 0)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(HotelRequest.HotelImage.FileName);
@@ -97,11 +104,9 @@ namespace Travela.Controllers
                 model.isActive = HotelRequest.IsActive;
                 model.roomList = HotelRequest.RoomList.Select(r => new HotelRoomModel
                 {
-                    hotelRoomId = r.HotelRoomId,
                     roomTypeId = r.RoomTypeId,
                     roomNo = r.RoomNo,
-                    amount = r.Amount,
-                    isActive = r.IsActive
+                    amount = Convert.ToDecimal(r.Amount),
                 }).ToList();
 
                 var result = hotelService.AddOrUpdate(model);

@@ -54,7 +54,6 @@ function EditModel(destinationId) {
         data: { destinationId: destinationId }, 
 
         success: function (data) {
-            debugger;
             if (data.isError) {
                 alert(data.strMessage);
             } else {

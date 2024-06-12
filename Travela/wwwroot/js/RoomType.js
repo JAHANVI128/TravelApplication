@@ -54,7 +54,6 @@ function EditModel(roomTypeId) {
         data: { roomTypeId : roomTypeId },
 
         success: function (data) {
-            debugger;
             if (data.isError) {
                 alert(data.strMessage);
             } else {

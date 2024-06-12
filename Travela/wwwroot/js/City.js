@@ -54,7 +54,6 @@ function EditModel(cityId) {
         data: { cityId: cityId }, // Pass cityId as a parameter
 
             success: function (data) {
-                debugger;
                 if (data.isError) {
                     alert(data.strMessage);
                 } else {

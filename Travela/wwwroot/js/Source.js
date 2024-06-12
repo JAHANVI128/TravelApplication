@@ -54,7 +54,6 @@ function EditModel(sourceId) {
         data: { sourceId: sourceId }, 
 
         success: function (data) {
-            debugger;
             if (data.isError) {
                 alert(data.strMessage);
             } else {

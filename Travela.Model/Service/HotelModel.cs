@@ -25,6 +25,7 @@ namespace Travela.Model.Service
     {
         public int hotelRoomId { get; set; }
         public int roomTypeId { get; set; }
+        public int hotelId { get; set; }
         public int roomNo { get; set; }
         public decimal amount { get; set; }
         public bool isActive { get; set; } = true;

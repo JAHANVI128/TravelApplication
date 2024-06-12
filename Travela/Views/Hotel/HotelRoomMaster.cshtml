@@ -1,19 +1,10 @@
 ﻿@using Travela.Models.Entities;
-@model HotelRequest;
+@model HotelRoom;
 @{
-    ViewData["HeaderName"] = "Hotel List";
-    ViewData["Title"] = "Hotel Master";
+    ViewData["HeaderName"] = "Hotel Room List";
+    ViewData["Title"] = "Hotel Room Master";
     ViewData["MenuName"] = "Hotels";
 }
-<style>
-    .modal-dialog {
-        max-width: 1200px !important;
-    }
-
-    .modal-body .row {
-        margin-bottom: 15px;
-    }
-</style>
 
 <div class="row">
     <div class="col-12">
@@ -29,10 +20,10 @@
                         <thead>
                             <tr>
                                 <th>Sr no.</th>
-                                <th>Hotel Image</th>
                                 <th>Hotel Name</th>
-                                <th>Hotel Phone No. </th>
-                                <th>City</th>
+                                <th>Room Type</th>
+                                <th>Room No.</th>
+                                <th>Room Price</th>
                                 <th>Is Active</th>
                                 <th>Actions</th>
                             </tr>
@@ -48,31 +39,30 @@
 
 @section Scripts {
 
-    <script src="~/js/Hotel.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.6/datatables.min.js"></script>
 
     <!-- Modal -->
-    <div class="modal fade" id="addHotelModal" tabindex="-1" aria-labelledby="addHotelModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addHotelRoomModal" tabindex="-1" aria-labelledby="addHotelRoomModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addHotelModalLabel">Add Hotel</h5>
+                    <h5 class="modal-title" id="addHotelRoomModalLabel">Add Hotel Room</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
                     <form id="form">
                         @Html.AntiForgeryToken()
-                        <input type="hidden" asp-for="HotelId" />
+                        <input type="hidden" asp-for="HotelRoomId" />
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" asp-for="HotelName">Hotel Name:</label>
+                                <label class="form-label" asp-for="RoomTypeId">Hotel Name:</label>
                                 <input type="text" class="form-control" id="HotelName" name="HotelName" required>
                                 <span class="text-danger" id="hotelError"></span>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" asp-for="HotelImage">Hotel Image:</label>
+                                <label class="form-label" asp-for="RoomTypeId">Hotel Image:</label>
                                 <input type="file" class="form-control" id="HotelImage" name="HotelImage" required>
                                 <span class="text-danger" id="hotelImgError"></span>
                             </div>
@@ -80,13 +70,13 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" asp-for="HotelPhone">Hotel Phone No. :</label>
+                                <label class="form-label" asp-for="RoomTypeId">Hotel Phone No. :</label>
                                 <input type="text" class="form-control" id="HotelPhone" name="HotelPhone" required>
                                 <span class="text-danger" id="hotelPhoneError"></span>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="CityId">City</label>
-                                <select asp-for="CityId" class="form-control">
+                                <select asp-for="RoomTypeId" class="form-control">
                                     <option value="">Select City</option>
                                 </select>
                                 <span class="text-danger" id="cityError"></span>

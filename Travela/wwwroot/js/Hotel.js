@@ -43,9 +43,26 @@
         }
 
         if (isValid) {
+            debugger;
             var formdata = new FormData($('#form')[0]);
             var fileInput = $('#HotelImage')[0].files[0];
+
+            var roomList = [];
+            $('#roomTable tbody tr').each(function () {
+                var roomType = $(this).find('td:eq(1)').text();
+                var roomNumber = $(this).find('td:eq(2)').text();
+                var amount = $(this).find('td:eq(3)').text();
+
+                var room = {
+                    RoomTypeId: roomType,
+                    RoomNo: roomNumber,
+                    Amount: parseFloat(amount)
+                };
+                roomList.push(room);
+            });
+
             formdata.append('HotelImage', fileInput);
+            formdata.append('RoomList', JSON.stringify(roomList));
 
             $.ajax({
                 type: "POST",
