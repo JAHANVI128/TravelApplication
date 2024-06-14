@@ -1,10 +1,12 @@
 ﻿@using Travela.Models.Entities;
 @model HotelRequest;
+
 @{
     ViewData["HeaderName"] = "Hotel List";
     ViewData["Title"] = "Hotel Master";
     ViewData["MenuName"] = "Hotels";
 }
+
 <style>
     .modal-dialog {
         max-width: 1200px !important;
@@ -20,7 +22,7 @@
         <div id="order-listing_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
             <div class="row">
                 <div class="col-md-12">
-                    <a id="addHotelBtn" class="btn btn-outline-primary" style="float : right; margin-bottom : 15px"> Add Hotel</a>
+                    <a id="addHotelBtn" class="btn btn-outline-primary" style="float: right; margin-bottom: 15px"> Add Hotel</a>
                 </div>
             </div>
             <div class="row">
@@ -47,11 +49,10 @@
 </div>
 
 @section Scripts {
-
     <script src="~/js/Hotel.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.6/datatables.min.js"></script>
 
-    <!-- Modal -->
+    <!-- Hotel Modal -->
     <div class="modal fade" id="addHotelModal" tabindex="-1" aria-labelledby="addHotelModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -59,7 +60,6 @@
                     <h5 class="modal-title" id="addHotelModalLabel">Add Hotel</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <div class="modal-body">
                     <form id="form">
                         @Html.AntiForgeryToken()
@@ -71,10 +71,12 @@
                                 <input type="text" class="form-control" id="HotelName" name="HotelName" required>
                                 <span class="text-danger" id="hotelError"></span>
                             </div>
+
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" asp-for="HotelImage">Hotel Image:</label>
                                 <input type="file" class="form-control" id="HotelImage" name="HotelImage" required>
                                 <span class="text-danger" id="hotelImgError"></span>
+                           @*  <img id="currentHotelImage" src="" alt="Current Hotel Image" style="width: 100px; height: 100px; display: none;"> *@
                             </div>
                         </div>
 
@@ -84,6 +86,7 @@
                                 <input type="text" class="form-control" id="HotelPhone" name="HotelPhone" required>
                                 <span class="text-danger" id="hotelPhoneError"></span>
                             </div>
+
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="CityId">City</label>
                                 <select asp-for="CityId" class="form-control">
@@ -108,11 +111,13 @@
                                 <input type="text" class="form-control" id="RoomType" name="RoomType" required>
                                 <span class="text-danger" id="roomTypeError"></span>
                             </div>
+
                             <div class="col-md-4 mb-3">
                                 <label class="form-label" for="RoomNumber">Room Number</label>
-                                <input type="text" class="form-control" id="RoomNumber" name="RoomNumber" required>
+                                <input type="number" class="form-control" id="RoomNumber" name="RoomNumber" required>
                                 <span class="text-danger" id="roomNumberError"></span>
                             </div>
+
                             <div class="col-md-4 mb-3">
                                 <label class="form-label" for="Amount">Amount</label>
                                 <input type="text" class="form-control" id="Amount" name="Amount" required>
@@ -135,7 +140,7 @@
                                             <th>Room Type</th>
                                             <th>Room Number</th>
                                             <th>Amount</th>
-                                            <th>Actions</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -53,29 +53,29 @@ function EditModel(cityId) {
         url: "/City/EditCity",
         data: { cityId: cityId }, // Pass cityId as a parameter
 
-            success: function (data) {
-                if (data.isError) {
-                    alert(data.strMessage);
-                } else {
-                    var dataList = data.result;
+        success: function (data) {
+            if (data.isError) {
+                alert(data.strMessage);
+            } else {
+                var dataList = data.result;
 
-                    Object.keys(dataList).forEach(function (key) {
+                Object.keys(dataList).forEach(function (key) {
 
-                        if ($('#' + capitalizeFirstLetter(key)) != null && $('#' + key) != undefined) {
-                            if (key.includes("is")) {
-                                $('#' + capitalizeFirstLetter(key)).prop('checked', dataList[key]);
+                    if ($('#' + capitalizeFirstLetter(key)) != null && $('#' + key) != undefined) {
+                        if (key.includes("is")) {
+                            $('#' + capitalizeFirstLetter(key)).prop('checked', dataList[key]);
                             }
                             else {
-                                $('#' + capitalizeFirstLetter(key)).val(dataList[key]);
-                            }
+                            $('#' + capitalizeFirstLetter(key)).val(dataList[key]);
                         }
-                    });
-                }
-                $('#addCityModal').modal('show');
-            },
-            error: function (ex) {
-                ShowMessage("Something went wrong. Please try again.", "", "error");
+                    }
+                });
             }
+            $('#addCityModal').modal('show');
+        },
+        error: function (ex) {
+            ShowMessage("Something went wrong. Please try again.", "", "error");
+        }
     });
 }
 

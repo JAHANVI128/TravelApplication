@@ -87,8 +87,26 @@ namespace Travela.Controllers
                 obj.result = false;
                 obj.Message = "An error occurred: " + ex.Message;
             }
-
             return obj;
+        }
+
+        [HttpGet]
+        [Route("/RoomType/GetRoomTypes")]
+        public JsonResponseModel GetRoomTypes()
+        {
+            JsonResponseModel objreturn = new JsonResponseModel();
+            try
+            {
+                var roomTypes = roomTypeService.GetAll();
+                objreturn.result = roomTypes;
+                objreturn.isError = false;
+            }
+            catch (Exception ex)
+            {
+                objreturn.isError = true;
+                objreturn.Message = "An error occurred: " + ex.Message;
+            }
+            return objreturn;
         }
 
         [HttpPost]

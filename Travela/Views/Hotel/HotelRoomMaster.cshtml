@@ -1,5 +1,5 @@
 ﻿@using Travela.Models.Entities;
-@model HotelRoom;
+@model HotelRoomRequest;
 @{
     ViewData["HeaderName"] = "Hotel Room List";
     ViewData["Title"] = "Hotel Room Master";
@@ -11,7 +11,7 @@
         <div id="order-listing_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
             <div class="row">
                 <div class="col-md-12">
-                    <a id="addHotelBtn" class="btn btn-outline-primary" style="float : right; margin-bottom : 15px"> Add Hotel</a>
+                    <a id="addHotelRoomBtn" class="btn btn-outline-primary" style="float : right; margin-bottom : 15px"> Add Hotel Room</a>
                 </div>
             </div>
             <div class="row">
@@ -38,7 +38,7 @@
 </div>
 
 @section Scripts {
-
+    <script src="~/js/Hotel.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.6/datatables.min.js"></script>
 
     <!-- Modal -->
@@ -51,9 +51,9 @@
                 </div>
 
                 <div class="modal-body">
-                    <form id="form">
+@*                     <form id="form">
                         @Html.AntiForgeryToken()
-                        <input type="hidden" asp-for="HotelRoomId" />
+                        <input type="hidden" asp-for="HotelId" />
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                     </form>
-                </div>
+ *@                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn grey btn-outline-secondary btn-round" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-outline-primary btn-round" id="btnMdlSave">Save</button>
