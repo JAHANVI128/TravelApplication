@@ -4,6 +4,8 @@
 
     $('#addCityBtn').click(function () {
         $('#addCityModal').modal('show');
+
+        $('#form')[0].reset();
     });
 
     $('#btnMdlSave').click(function () {

@@ -3,7 +3,10 @@
     BindGrid();
 
     $('#addRoomTypeBtn').click(function () {
+        $('#addRoomTypeLabel').text('Add Room Type');
+
         $('#addRoomTypeModal').modal('show');
+        resetForm();
     });
 
     $('#btnMdlSave').click(function () {
@@ -29,7 +32,6 @@
                     alert(data.message);
                     $('#addRoomTypeModal').modal('hide');
                     BindGrid();
-                    $('#form')[0].reset();
                 }
                 else {
                     alert("Record not saved, Try again", "", "error");
@@ -57,6 +59,7 @@ function EditModel(roomTypeId) {
             if (data.isError) {
                 alert(data.strMessage);
             } else {
+                $('#addRoomTypeLabel').text('Edit Room Type');
                 var dataList = data.result;
 
                 Object.keys(dataList).forEach(function (key) {
@@ -159,4 +162,9 @@ function BindGrid() {
             }
         ]
     });
+}
+
+function resetForm() {
+    $('#form')[0].reset();
+    $('#RoomTypeName').text('');
 }

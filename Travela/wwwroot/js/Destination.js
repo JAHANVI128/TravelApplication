@@ -4,6 +4,8 @@
 
     $('#addDestinationBtn').click(function () {
         $('#addDestinationModal').modal('show');
+
+        $('#form')[0].reset();
     });
 
     $('#btnMdlSave').click(function () {

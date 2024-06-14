@@ -5,16 +5,12 @@
     //BindRoomTypeData(); // Add this line to fetch and populate room types
 
     $('#addHotelBtn').click(function () {
-        //$('#addHotelModalLabel').text('Add Hotel');
-        //resetForm();
+
+        $('#addHotelModalLabel').text('Add Hotel');
         //$('#currentHotelImage').hide();
         $('#addHotelModal').modal('show');
+        resetForm();
     });
-
-    //$('#addHotelModal').on('hidden.bs.modal', function () {
-    //    resetForm();
-    //    $('#currentHotelImage').hide();
-    //});
 
     $('#btnMdlSave').click(function () {
         var hotelName = $('#HotelName').val();
@@ -98,61 +94,59 @@
         }
     });
 
-    //let roomCounter = 1;
+    let roomCounter = 1;
 
-    //$('#addRoomBtn').click(function () {
-    //    var roomType = $('#RoomType').val();
-    //    var roomNumber = $('#RoomNumber').val();
-    //    var amount = $('#Amount').val();
-    //    var isValid = true;
+    $('#addRoomBtn').click(function () {
 
-    //    if (!roomType) {
-    //        $('#roomTypeError').text('Please enter Room Type.');
-    //        isValid = false;
-    //    } else {
-    //        $('#roomTypeError').text('');
-    //    }
+        resetForm();
 
-    //    if (!roomNumber) {
-    //        $('#roomNumberError').text('Please enter Room Number.');
-    //        isValid = false;
-    //    } else {
-    //        $('#roomNumberError').text('');
-    //    }
+        var roomType = $('#RoomType').val();
+        var roomNumber = $('#RoomNumber').val();
+        var amount = $('#Amount').val();
+        var isValid = true;
 
-    //    if (!amount) {
-    //        $('#amountError').text('Please enter Amount.');
-    //        isValid = false;
-    //    } else if (isNaN(amount)) {
-    //        $('#amountError').text('Please enter a valid Amount.');
-    //        isValid = false;
-    //    } else {
-    //        $('#amountError').text('');
-    //    }
+        if (!roomType) {
+            $('#roomTypeError').text('Please enter Room Type.');
+            isValid = false;
+        } else {
+            $('#roomTypeError').text('');
+        }
 
-    //    if (isValid) {
-    //        $('#roomTable tbody').append(`
-    //            <tr>
-    //                <td>${roomCounter++}</td>
-    //                <td>${roomType}</td>
-    //                <td>${roomNumber}</td>
-    //                <td>${amount}</td>
-    //                <td><button type="button" class="btn btn-outline-danger btn-sm delete-room">Delete</button></td>
-    //            </tr>
-    //        `);
+        if (!roomNumber) {
+            $('#roomNumberError').text('Please enter Room Number.');
+            isValid = false;
+        } else {
+            $('#roomNumberError').text('');
+        }
 
-    // Clear inputs after adding
-    //        $('#RoomType').val('');
-    //        $('#RoomNumber').val('');
-    //        $('#Amount').val('');
-    //    }
-    //});
+        if (!amount) {
+            $('#amountError').text('Please enter Amount.');
+            isValid = false;
+        } else if (isNaN(amount)) {
+            $('#amountError').text('Please enter a valid Amount.');
+            isValid = false;
+        } else {
+            $('#amountError').text('');
+        }
 
-    // Event delegation to handle dynamically added delete buttons
-    //$('#roomTable tbody').on('click', '.delete-room', function () {
-    //    $(this).closest('tr').remove();
-    //    roomCounter--; // Decrement room counter
-    //});
+        if (isValid) {
+            $('#roomTable tbody').append(`
+                <tr>
+                    <td>${roomCounter++}</td>
+                    <td>${roomType}</td>
+                    <td>${roomNumber}</td>
+                    <td>${amount}</td>
+                    <td><button type="button" class="btn btn-outline-danger btn-sm delete-room">Delete</button></td>
+                </tr>
+            `);
+        }
+    });
+
+     //Event delegation to handle dynamically added delete buttons
+    $('#roomTable tbody').on('click', '.delete-room', function () {
+        $(this).closest('tr').remove();
+        roomCounter--; // Decrement room counter
+    });
 });
 
 function EditModel(hotelId) {
@@ -338,13 +332,15 @@ function BindGrid() {
             }
         ]
     });
+}
 
-    function resetForm() {
-        $('#form')[0].reset();
-        $('#hotelError').text('');
-        $('#hotelImgError').text('');
-        $('#hotelPhoneError').text('');
-        $('#cityError').text('');
-        $('#currentHotelImage').attr('src', '').hide();
-    }
+function resetForm() {
+    $('#form')[0].reset();
+    $('#hotelError').text('');
+    $('#hotelImgError').text('');
+    $('#hotelPhoneError').text('');
+    $('#cityError').text('');
+    $('#RoomType').val('');
+    $('#RoomNumber').val('');
+    $('#Amount').val('');
 }

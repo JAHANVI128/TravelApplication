@@ -4,6 +4,8 @@
 
     $('#addSourceBtn').click(function () {
         $('#addSourceModal').modal('show');
+
+        $('#form')[0].reset();
     });
 
     $('#btnMdlSave').click(function () {
