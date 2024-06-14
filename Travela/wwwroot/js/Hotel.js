@@ -2,12 +2,12 @@
     console.log("Document ready");
     BindGrid();
     BindCityData();
-    //BindRoomTypeData(); // Add this line to fetch and populate room types
+    fetchRoomTypes();
 
     $('#addHotelBtn').click(function () {
 
         $('#addHotelModalLabel').text('Add Hotel');
-        //$('#currentHotelImage').hide();
+
         $('#addHotelModal').modal('show');
         resetForm();
     });
@@ -177,12 +177,6 @@ function EditModel(hotelId) {
                     }
                 });
 
-                //if (dataList.hotelImage) {
-                //    $('#currentHotelImage').attr('src', dataList.hotelImage).show();
-                //} else {
-                //    $('#currentHotelImage').hide();
-                //}
-
                 $('#addHotelModal').modal('show');
             }
         },
@@ -221,20 +215,24 @@ function BindCityData() {
             alert("An error occurred while fetching city data.");
         }
 
-        //success: function (data) {
-        //    if (!data.isError) {
-        //        var citySelect = $('#CityId');
-        //        citySelect.empty();
-        //        citySelect.append('<option value="">Select City</option>');
-        //        data.result.forEach(function (city) {
-        //            citySelect.append('<option value="' + city.cityId + '">' + city.cityName + '</option>');
-        //        });
-        //    }
-        //},
-        //error: function (ex) {
-        //    alert("Something went wrong while fetching cities. Please try again.");
-        //}
+    });
+}
 
+function fetchRoomTypes() {
+    $.ajax({
+        url: '/api/roomtypes', // Adjust URL to your API endpoint
+        method: 'GET',
+        success: function (data) {
+            var roomTypeDropdown = $('#RoomType');
+            roomTypeDropdown.empty();
+            roomTypeDropdown.append('<option value="">Select Room Type</option>');
+            data.forEach(function (roomType) {
+                roomTypeDropdown.append('<option value="' + roomType.id + '">' + roomType.name + '</option>');
+            });
+        },
+        error: function (error) {
+            console.error('Error fetching room types:', error);
+        }
     });
 }
 
