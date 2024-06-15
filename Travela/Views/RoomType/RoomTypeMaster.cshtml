@@ -1,5 +1,6 @@
 ﻿@using Travela.Models.Entities;
 @model RoomTypeRequest;
+
 @{
     ViewData["HeaderName"] = "Room Type List";
     ViewData["Title"] = "Room Type Master";
@@ -11,7 +12,7 @@
         <div id="order-listing_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
             <div class="row">
                 <div class="col-md-12">
-                    <a id="addRoomTypeBtn" class="btn btn-outline-primary" style="float : right;"> Add Room Type</a>
+                    <a id="addRoomTypeBtn" class="btn btn-outline-primary" style="float: right;"> Add Room Type</a>
                 </div>
             </div>
             <div class="row">
@@ -19,7 +20,7 @@
                     <table id="tbldata" class="table dataTable" aria-describedby="order-listing_info">
                         <thead>
                             <tr>
-                                <th>Sr. No. </th>
+                                <th>Sr. No.</th>
                                 <th>Room Type Name</th>
                                 <th>Is Active</th>
                                 <th>Actions</th>
@@ -35,7 +36,6 @@
 </div>
 
 @section Scripts {
-
     <script src="~/js/RoomType.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.6/datatables.min.js"></script>
 
@@ -47,7 +47,6 @@
                     <h5 class="modal-title" id="addRoomTypeModalLabel">Add RoomType Name</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <div class="modal-body">
                     <form id="form">
                         @Html.AntiForgeryToken()
@@ -55,14 +54,14 @@
                         <div class="mb-3">
                             <label class="form-label" asp-for="RoomTypeName">Room Type Name:</label>
                             <input type="text" class="form-control" id="RoomTypeName" name="RoomTypeName" required>
-                            <span class="text-danger" id="RoomTypeError"></span>
+                            <span class="text-danger" id="roomTypeError"></span>
                             <div class="col-md-4 mt-1">
                                 <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
                                     <br />
                                     <input type="checkbox" class="custom-control-input" asp-for="IsActive" />
                                     <label class="custom-control-label float-left">Is Active</label>
                                 </div>
-                            </div>
+                        </div>
                         </div>
                     </form>
                 </div>

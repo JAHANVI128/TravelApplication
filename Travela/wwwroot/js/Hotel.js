@@ -220,8 +220,9 @@ function BindCityData() {
 
 function fetchRoomTypes() {
     $.ajax({
-        url: '/api/roomtypes', // Adjust URL to your API endpoint
-        method: 'GET',
+        type: 'GET',
+        url: '/RoomType/RoomTypeList', // Adjust URL to your API endpoint
+        dataType: 'json',
         success: function (data) {
             var roomTypeDropdown = $('#RoomType');
             roomTypeDropdown.empty();
