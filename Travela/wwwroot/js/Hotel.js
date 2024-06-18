@@ -5,9 +5,7 @@
     fetchRoomTypes();
 
     $('#addHotelBtn').click(function () {
-
         $('#addHotelModalLabel').text('Add Hotel');
-
         $('#addHotelModal').modal('show');
         resetForm();
     });
@@ -97,9 +95,7 @@
     let roomCounter = 1;
 
     $('#addRoomBtn').click(function () {
-
         resetForm();
-
         var roomType = $('#RoomType').val();
         var roomNumber = $('#RoomNumber').val();
         var amount = $('#Amount').val();
@@ -142,10 +138,9 @@
         }
     });
 
-     //Event delegation to handle dynamically added delete buttons
     $('#roomTable tbody').on('click', '.delete-room', function () {
         $(this).closest('tr').remove();
-        roomCounter--; // Decrement room counter
+        roomCounter--;
     });
 });
 
@@ -214,22 +209,33 @@ function BindCityData() {
             console.error("Error fetching city data: ", textStatus, errorThrown);
             alert("An error occurred while fetching city data.");
         }
-
     });
 }
 
 function fetchRoomTypes() {
+    console.log("Room Type");
     $.ajax({
         type: 'GET',
-        url: '/RoomType/RoomTypeList', // Adjust URL to your API endpoint
+        url: '/RoomType/RoomTypeList',
         dataType: 'json',
         success: function (data) {
-            var roomTypeDropdown = $('#RoomType');
-            roomTypeDropdown.empty();
-            roomTypeDropdown.append('<option value="">Select Room Type</option>');
-            data.forEach(function (roomType) {
-                roomTypeDropdown.append('<option value="' + roomType.id + '">' + roomType.name + '</option>');
-            });
+            console.log("AJAX call successful");
+            console.log("Received data:", data);
+
+            if (data != null && data != undefined && data.data != undefined && Array.isArray(data.data)) {
+                $('#RoomType').html('');
+                data.data.forEach(function (item) {
+                    if (item.roomTypeId && item.roomTypeName) {
+                        $('#RoomType').append(new Option(item.roomTypeName, item.roomTypeId));
+                    }
+                });
+            } else {
+                console.error("Invalid or unexpected data format received:", data);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX error:", error);
+            alert("Failed to load room types: " + error);
         },
         error: function (error) {
             console.error('Error fetching room types:', error);

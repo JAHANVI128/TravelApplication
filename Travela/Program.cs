@@ -2,14 +2,15 @@ using System.Configuration;
 using Travela.Common;
 using Travela.IService.Service;
 using Travela.Services.Service;
-IConfigurationRoot Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuration
 DapperConnection.isDevlopment = true;
-var config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-Configuration = config.Build();
-DapperConnection.connectionString = Configuration.GetConnectionString("DefaultConnection");
+var config = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+DapperConnection.connectionString = config.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -37,6 +38,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
-    );
+);
 
 app.Run();

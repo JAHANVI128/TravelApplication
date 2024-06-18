@@ -25,7 +25,7 @@ namespace Travela.Controllers
 
         [HttpGet]
         [Route("/RoomType/RoomTypeList")]
-        public IActionResult CityList()
+        public IActionResult RoomTypeList()
         {
             var rooms = roomTypeService.GetAll();
             return Json(rooms);
