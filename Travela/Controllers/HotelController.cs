@@ -101,6 +101,7 @@ namespace Travela.Controllers
                 model.hotelName = HotelRequest.HotelName;
                 model.hotelPhone = HotelRequest.HotelPhone;
                 model.cityId = HotelRequest.CityId;
+                model.roomType = HotelRequest.RoomTypeId;
                 model.isActive = HotelRequest.IsActive;
                 model.roomList = HotelRequest.RoomList.Select(r => new HotelRoomModel
                 {

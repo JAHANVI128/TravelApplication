@@ -7,6 +7,7 @@
     $('#addHotelBtn').click(function () {
         $('#addHotelModalLabel').text('Add Hotel');
         $('#addHotelModal').modal('show');
+        $('#form')[0].reset();
         resetForm();
     });
 
@@ -95,7 +96,6 @@
     let roomCounter = 1;
 
     $('#addRoomBtn').click(function () {
-        resetForm();
         var roomType = $('#RoomType').val();
         var roomNumber = $('#RoomNumber').val();
         var amount = $('#Amount').val();
@@ -135,6 +135,7 @@
                     <td><button type="button" class="btn btn-outline-danger btn-sm delete-room">Delete</button></td>
                 </tr>
             `);
+            resetForm();
         }
     });
 
@@ -219,26 +220,19 @@ function fetchRoomTypes() {
         url: '/RoomType/RoomTypeList',
         dataType: 'json',
         success: function (data) {
-            console.log("AJAX call successful");
-            console.log("Received data:", data);
-
-            if (data != null && data != undefined && data.data != undefined && Array.isArray(data.data)) {
+            if (data != null && data != undefined && data != undefined && Array.isArray(data)) {
                 $('#RoomType').html('');
-                data.data.forEach(function (item) {
+                $('#RoomType').append(new Option("Select Room Type", ""));
+                data.forEach(function (item) {
                     if (item.roomTypeId && item.roomTypeName) {
                         $('#RoomType').append(new Option(item.roomTypeName, item.roomTypeId));
                     }
                 });
-            } else {
-                console.error("Invalid or unexpected data format received:", data);
             }
         },
         error: function (xhr, status, error) {
             console.error("AJAX error:", error);
             alert("Failed to load room types: " + error);
-        },
-        error: function (error) {
-            console.error('Error fetching room types:', error);
         }
     });
 }
@@ -340,7 +334,6 @@ function BindGrid() {
 }
 
 function resetForm() {
-    $('#form')[0].reset();
     $('#hotelError').text('');
     $('#hotelImgError').text('');
     $('#hotelPhoneError').text('');
