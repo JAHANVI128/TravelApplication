@@ -4,6 +4,22 @@
     BindCityData();
     fetchRoomTypes();
 
+    // Validation for numeric fields
+    //$('#HotelPhone,#RoomNumber, #Amount').on('input', function () {
+    //    var value = $(this).val();
+    //    if (/[^0-9]/.test(value)) { // Check for non-numeric characters
+    //        alert('Please enter a valid number.');
+    //        $(this).val(value.replace(/[^0-9]/g, '')); // Remove non-numeric characters
+    //    }
+    //});
+
+    $('#RoomNumber, #Amount, #HotelPhone').on('keypress', function (e) {
+        if (e.which < 48 || e.which > 57) { // ASCII codes for digits 0-9
+            alert('Please enter a valid number.');
+            e.preventDefault();
+        }
+    });
+
     $('#addHotelBtn').click(function () {
         $('#addHotelModalLabel').text('Add Hotel');
         $('#addHotelModal').modal('show');
@@ -32,7 +48,7 @@
             $('#hotelImgError').text('');
         }
 
-        if (!hotelPhone) {
+        if (!hotelPhone || hotelPhone.length < 10 || hotelPhone.length > 10) {
             $('#hotelPhoneError').text('Please enter Hotel Phone.');
             isValid = false;
         } else {
@@ -47,7 +63,6 @@
         }
 
         if (isValid) {
-            debugger;
             var formdata = new FormData($('#form')[0]);
             var fileInput = $('#HotelImage')[0].files[0];
 
@@ -97,7 +112,6 @@
     let roomCounter = 1;
 
     $('#addRoomBtn').click(function () {
-        debugger;
         var roomType = $('#RoomType').val();
         var roomTypeText = $('#RoomType option:selected').text();
         var roomNumber = $('#RoomNumber').val();
@@ -105,7 +119,7 @@
         var isValid = true;
 
         if (!roomType) {
-            $('#roomTypeError').text('Please enter Room Type.');
+            $('#roomTypeError').text('Please select Room Type.');
             isValid = false;
         } else {
             $('#roomTypeError').text('');
@@ -113,6 +127,9 @@
 
         if (!roomNumber) {
             $('#roomNumberError').text('Please enter Room Number.');
+            isValid = false;
+        } else if (isNaN(roomNumber)) {
+            $('#roomNumberError').text('Please enter a valid Room Number.');
             isValid = false;
         } else {
             $('#roomNumberError').text('');
@@ -160,9 +177,6 @@ function EditModel(hotelId) {
                 $('#addHotelModalLabel').text('Edit Hotel');
                 var dataList = data.result;
 
-                // Call to bind room types before populating form
-                //BindRoomTypeData();
-
                 Object.keys(dataList).forEach(function (key) {
                     var element = $('#' + key.charAt(0).toUpperCase() + key.slice(1));
                     if (element.length) {
@@ -186,26 +200,18 @@ function EditModel(hotelId) {
 }
 
 function BindCityData() {
-    // Populate city dropdown
     $.ajax({
         type: "GET",
-        url: "/City/CityList", // URL to fetch city data
+        url: "/City/CityList",
         dataType: 'json',
         success: function (data) {
             if (data != null && data.length > 0) {
-                // Clear existing options
                 $('#CityId').empty();
-
-                // Add default option
                 $('#CityId').append('<option value="">Select City</option>');
-
-                // Iterate over city data and add options to the dropdown
                 $.each(data, function (index, city) {
-                    console.log(city);
                     $('#CityId').append('<option value="' + city.cityId + '">' + city.cityName + '</option>');
                 });
             } else {
-                // Handle empty or no data
                 $('#CityId').append('<option value="">No data available</option>');
             }
         },
@@ -217,13 +223,12 @@ function BindCityData() {
 }
 
 function fetchRoomTypes() {
-    console.log("Room Type");
     $.ajax({
         type: 'GET',
         url: '/RoomType/RoomTypeList',
         dataType: 'json',
         success: function (data) {
-            if (data != null && data != undefined && data != undefined && Array.isArray(data)) {
+            if (data != null && Array.isArray(data)) {
                 $('#RoomType').html('');
                 $('#RoomType').append(new Option("Select Room Type", ""));
                 data.forEach(function (item) {
@@ -246,7 +251,7 @@ function DeleteData(hotelId, hotelName) {
             type: "POST",
             url: "/Hotel/DeleteHotel",
             data: { hotelId: hotelId },
-            dataType: "json", // Expecting JSON response
+            dataType: "json",
             success: function (result) {
                 if (result.isError) {
                     alert(result.Message);
@@ -293,7 +298,7 @@ function BindGrid() {
                 console.log(json.data);
                 var jsonObj = json.data;
                 return jsonObj;
-            }
+                }
         },
         "columnDefs": [{
             "targets": [0],
