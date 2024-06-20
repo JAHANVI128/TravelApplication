@@ -68,7 +68,6 @@ namespace Travela.Services.Service
                     { "HotelName", model.hotelName },
                     { "HotelPhone", model.hotelPhone },
                     { "CityId", model.cityId },
-                    { "RoomTypeId", model.roomType },
                     { "IsActive", model.isActive }
                 };
 

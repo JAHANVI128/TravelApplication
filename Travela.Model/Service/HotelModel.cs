@@ -14,7 +14,6 @@ namespace Travela.Model.Service
         public int hotelPhone { get; set; }
         public int cityId { get; set; }
         public string strcity { get; set; }
-        public int roomType { get; set; }
         public bool isActive { get; set; } = true;
         public bool isDelete { get; set; }
         public string createdBy { get; set; }

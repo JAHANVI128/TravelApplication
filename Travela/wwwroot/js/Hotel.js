@@ -47,12 +47,13 @@
         }
 
         if (isValid) {
+            debugger;
             var formdata = new FormData($('#form')[0]);
             var fileInput = $('#HotelImage')[0].files[0];
 
             var roomList = [];
             $('#roomTable tbody tr').each(function () {
-                var roomTypeId = $(this).find('td:eq(1)').data('roomtypeid');
+                var roomTypeId = $(this).find('td:eq(1)').data('id');
                 var roomNumber = $(this).find('td:eq(2)').text();
                 var amount = $(this).find('td:eq(3)').text();
 
@@ -96,7 +97,9 @@
     let roomCounter = 1;
 
     $('#addRoomBtn').click(function () {
+        debugger;
         var roomType = $('#RoomType').val();
+        var roomTypeText = $('#RoomType option:selected').text();
         var roomNumber = $('#RoomNumber').val();
         var amount = $('#Amount').val();
         var isValid = true;
@@ -129,7 +132,7 @@
             $('#roomTable tbody').append(`
                 <tr>
                     <td>${roomCounter++}</td>
-                    <td>${roomType}</td>
+                    <td data-id="${roomType}">${roomTypeText}</td>
                     <td>${roomNumber}</td>
                     <td>${amount}</td>
                     <td><button type="button" class="btn btn-outline-danger btn-sm delete-room">Delete</button></td>
