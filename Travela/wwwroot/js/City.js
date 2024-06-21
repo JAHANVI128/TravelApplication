@@ -3,9 +3,12 @@
     BindGrid();
 
     $('#addCityBtn').click(function () {
+        $("#CityId").val("0")
+        $('#addCityModalLabel').text('Add Room Type');
         $('#addCityModal').modal('show');
 
         $('#form')[0].reset();
+
     });
 
     $('#btnMdlSave').click(function () {
@@ -59,6 +62,7 @@ function EditModel(cityId) {
             if (data.isError) {
                 alert(data.strMessage);
             } else {
+                $('#addCityModalLabel').text('Edit City Name');
                 var dataList = data.result;
 
                 Object.keys(dataList).forEach(function (key) {

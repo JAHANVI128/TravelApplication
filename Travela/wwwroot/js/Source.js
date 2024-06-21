@@ -3,6 +3,8 @@
     BindGrid();
 
     $('#addSourceBtn').click(function () {
+        $("#SourceId").val("0")
+        $('#addSourceLabel').text('Add Source');
         $('#addSourceModal').modal('show');
 
         $('#form')[0].reset();
@@ -59,6 +61,7 @@ function EditModel(sourceId) {
             if (data.isError) {
                 alert(data.strMessage);
             } else {
+                $('#addSourceModalLabel').text('Edit Source');
                 var dataList = data.result;
 
                 Object.keys(dataList).forEach(function (key) {

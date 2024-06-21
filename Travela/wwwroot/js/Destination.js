@@ -3,6 +3,8 @@
     BindGrid();
 
     $('#addDestinationBtn').click(function () {
+        $("#DestinationId").val("0")
+        $('#addDestinationModalLabel').text('Add Destination');
         $('#addDestinationModal').modal('show');
 
         $('#form')[0].reset();
@@ -59,6 +61,7 @@ function EditModel(destinationId) {
             if (data.isError) {
                 alert(data.strMessage);
             } else {
+                $('#addDestinationModalLabel').text('Edit Destination');
                 var dataList = data.result;
 
                 Object.keys(dataList).forEach(function (key) {

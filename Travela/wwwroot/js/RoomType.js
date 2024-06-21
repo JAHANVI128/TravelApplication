@@ -3,6 +3,7 @@
     BindGrid();
 
     $('#addRoomTypeBtn').click(function () {
+        $("#RoomTypeId").val("0")
         $('#addRoomTypeLabel').text('Add Room Type');
         $('#addRoomTypeModal').modal('show');
         resetForm();
