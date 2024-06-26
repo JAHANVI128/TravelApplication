@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Travela.IService.Service
+namespace Travela.Services.Service
 {
-    internal class IPackageDescriptionService
+    internal class PackageService
     {
     }
 }
