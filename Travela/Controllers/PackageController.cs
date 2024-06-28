@@ -74,7 +74,7 @@ namespace Travela.Controllers
 
         [HttpPost]
         [Route("/Package/AddOrUpdatePackage")]
-        public JsonResponseModel AddOrUpdateCity(PackageRequest packageRequest)
+        public JsonResponseModel AddOrUpdatePackage(PackageRequest packageRequest)
         {
             JsonResponseModel obj = new JsonResponseModel();
             try
