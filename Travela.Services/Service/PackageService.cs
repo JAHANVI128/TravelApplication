@@ -62,55 +62,68 @@ namespace Travela.Services.Service
             JsonResponseModel response = new JsonResponseModel();
             try
             {
-
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
                 dictionary.Add("Id", model.packageId);
                 dictionary.Add("PackageName", model.packageName);
+                dictionary.Add("PackageOverview", model.packageOverview);
+                dictionary.Add("Image", model.image);
+                dictionary.Add("AvlDates", model.avlDates);
+                dictionary.Add("PackageAmt", model.packageAmt);
+                dictionary.Add("NoOfDays", model.noOfDays);
+                dictionary.Add("NoOfNights", model.noOfNights);
+                dictionary.Add("PackageType", model.packageType);
+                dictionary.Add("Itinerary", model.itinerary);
+                dictionary.Add("Gallery", model.gallery);
+                dictionary.Add("Include", model.include);
+                dictionary.Add("Exclud", model.exclud);
+                dictionary.Add("SourceId", model.sourceId);
+                dictionary.Add("SourceId", model.sourceId);
+                dictionary.Add("DestinationId", model.destinationId);
+                dictionary.Add("HotelId", model.hotelId);
                 dictionary.Add("IsActive", model.isActive);
 
                 var data = dapperConnection.GetListResult<long>("InsertOrUpdatePackage", CommandType.StoredProcedure, dictionary).FirstOrDefault();
 
-                if (model.packageId == 0)
-                {
-                    response.strMessage = "Register successfully";
-                }
-                else
-                {
-                    response.strMessage = "Record updated successfully";
-                }
-                response.isError = false;
-                response.type = PopupMessageType.success.ToString();
-                response.result = data;
+                //if (model.packageId == 0)
+                //{
+                //    response.strMessage = "Register successfully";
+                //}
+                //else
+                //{
+                //    response.strMessage = "Record updated successfully";
+                //}
+                //response.isError = false;
+                //response.type = PopupMessageType.success.ToString();
+                //response.result = data;
 
-                response.Success = true;
-                response.Message = "Package added/updated successfully.";
+                //response.Success = true;
+                //response.Message = "Package added/updated successfully.";
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error("Error adding/updating package.", ex.ToString(), "PackageService", "AddOrUpdate");
-                response.Success = false;
+                //ErrorLogger.Error("Error adding/updating package.", ex.ToString(), "PackageService", "AddOrUpdate");
+                //response.Success = false;
                 response.Message = "An error occurred while adding/updating package.";
             }
             return response;
-
         }
 
-        public JsonResponseModel Delete(long CityId)
+        public JsonResponseModel Delete(long PackageId)
         {
             JsonResponseModel response = new JsonResponseModel();
             try
             {
                 Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                dictionary.Add("Id", CityId);
+                dictionary.Add("Id", PackageId);
 
-                dapperConnection.GetListResult<int>("RemoveCity", CommandType.StoredProcedure, dictionary);
+                dapperConnection.GetListResult<int>("RemovePackage", CommandType.StoredProcedure, dictionary);
                 response.Success = true;
                 response.isError = false;
                 response.Message = "Package deleted successfully.";
             }
             catch (Exception ex)
             {
-                ErrorLogger.Error($"Error deleting package with ID /*{PackageId}*/.", ex.ToString(), "CityService", "Delete");
+                ErrorLogger.Error($"Error deleting package with ID {PackageId}.", ex.ToString(), "PackageService", "Delete");
                 response.Success = false;
                 response.Message = "An error occurred while deleting source.";
             }
@@ -144,7 +157,6 @@ namespace Travela.Services.Service
                 }
                 // Dispose unmanaged resources here.
             }
-
             disposed = true;
         }
         #endregion

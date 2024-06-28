@@ -20,7 +20,7 @@ namespace Travela.Model.Service
         public string itinerary { get; set; }
         public string gallery { get; set; }
         public string include { get; set; }
-        public string exclude { get; set; }
+        public string exclud { get; set; }
         public int sourceId { get; set; }
         public int destinationId { get; set; }
         public int hotelId { get; set; }
