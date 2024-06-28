@@ -82,7 +82,20 @@ namespace Travela.Controllers
                 PackageModel model = new PackageModel();
                 model.packageId = packageRequest.PackageId;
                 model.packageName = packageRequest.PackageName;
+                model.packageOverview = packageRequest.PackageOverview;
+                model.image = packageRequest.Image;
                 model.avlDates = packageRequest.AvlDates;
+                model.packageAmt = packageRequest.PackageAmt;
+                model.noOfDays = packageRequest.NoOfDays;
+                model.noOfNights = packageRequest.NoOfNights;
+                model.packageType = packageRequest.PackageType;
+                model.itinerary = packageRequest.Itinerary;
+                model.gallery = packageRequest.Gallery;
+                model.include = packageRequest.Include;
+                model.exclud = packageRequest.Exclud;
+                model.sourceId = packageRequest.SourceId;
+                model.destinationId = packageRequest.DestinationId;
+                model.hotelId = packageRequest.HotelId;
                 model.isActive = packageRequest.IsActive;
 
                 var result = packageService.AddOrUpdate(model);
