@@ -7,7 +7,7 @@
     ViewData["MenuName"] = "Packages";
 }
 
-<div class="row">
+@* <div class="row">
     <div class="col-12">
         <div id="order-listing_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
             <div class="row">
@@ -17,40 +17,38 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <table id="tbldata" class="table dataTable" aria-describedby="order-listing_info">
-                        <thead>
-                            <tr>
-                                <th>Sr no.</th>
-                                <th>Package Name</th>
-                                <th>Package Overview</th>
-                                <th>Image </th>
-                                <th>Available Dates</th>
-                                <th>Package Amount</th>
-                                <th>No. Of Days</th>
-                                <th>No. Of Nights</th>
-                                <th>Package Category</th>
-                                <th>Itinerary</th>
-                                <th>Gallery</th>
-                                <th>Package Inclusions</th>
-                                <th>Package Exclusions</th>
-                                <th>Source</th>
-                                <th>Destination</th>
-                                <th>Accomodations</th>
-                                <th>Package Terms</th>
-                                <th>Package Cancellation Policy</th>
-                                <th>Package Refund Policy</th>
-                                <th>Package Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                                
                 </div>
             </div>
         </div>
     </div>
+</div> *@
+
+@* <style>
+    #tblData {
+        width: 1152.422px !important;
+    }
+</style> *@
+<div class="row">
+    <div class="col-md-12">
+        <a id="addpackageBtn" data-bs-toggle="modal" class="btn btn-outline-primary btn-round" style="float:right">Add Package</a>
+    </div>
 </div>
+<br></br>
+
+<section class="basic-elements">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-outline-primary">
+                <div class="card-block card-dashboard">
+                    <div id="cardsContainer" class="row">
+                        <!-- Dynamic Cards will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     <script src="~/js/Package.js"></script>
