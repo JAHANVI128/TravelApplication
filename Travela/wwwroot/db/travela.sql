@@ -243,7 +243,7 @@ CREATE TABLE `package` (
   CONSTRAINT `destinationId` FOREIGN KEY (`destinationId`) REFERENCES `destination` (`destinationId`),
   CONSTRAINT `hotelId` FOREIGN KEY (`hotelId`) REFERENCES `hotel` (`hotelId`),
   CONSTRAINT `sourceId` FOREIGN KEY (`sourceId`) REFERENCES `source` (`sourceId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +252,7 @@ CREATE TABLE `package` (
 
 LOCK TABLES `package` WRITE;
 /*!40000 ALTER TABLE `package` DISABLE KEYS */;
-INSERT INTO `package` VALUES (1,'c xzcv','DSfcsvfbgvfgn bcvbndghjnxgfhbxbdgfbfzgbv ','Afcsxdgvd','i7bjhxasgdc',21032,2,6,'xfghx','dxhbn ','cxhgbn m','chvbm n','cxm',1,2,5,1,0,'admin','2024-06-28 11:36:10'),(6,'gvb xgf','xzfgvb ','dfbhv','sdgzvg',4635,2,6,'fxnhbxvcgb','mslogfdhflgkjhdfkjhgkjbfgkhdsfiuhaklsdjhflakjhdf','fankgjsdfbdsfkgbndfb','n fdskgdsfbgkcxnvb','djbvg kbnkjnfdgb',4,4,4,0,1,'admin','2024-06-28 12:00:39');
+INSERT INTO `package` VALUES (1,'c xzcv','DSfcsvfbgvfgn bcvbndghjnxgfhbxbdgfbfzgbv ','Afcsxdgvd','i7bjhxasgdc',21032,2,6,'xfghx','dxhbn ','cxhgbn m','chvbm n','cxm',1,2,5,1,0,'admin','2024-06-28 11:36:10'),(6,'gvb xgf','xzfgvb ','dfbhv','sdgzvg',4635,2,6,'fxnhbxvcgb','mslogfdhflgkjhdfkjhgkjbfgkhdsfiuhaklsdjhflakjhdf','fankgjsdfbdsfkgbndfb','n fdskgdsfbgkcxnvb','djbvg kbnkjnfdgb',4,4,4,0,0,'admin','2024-06-28 12:00:39'),(7,'Manali','gdkjydsgc','null','12',15202,21,4,'Couple','gvjcdah','null','gskudxwgs','hgbdjchg',4,4,2,1,0,'admin','2024-06-29 11:31:36'),(8,'gdgrd','dfdesf','null','45',54321,45,45,'fds','fdgr','null','dsfesd','fdsfe',4,4,4,1,0,'admin','2024-06-29 11:34:52');
 /*!40000 ALTER TABLE `package` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -938,4 +938,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-28 15:28:18
+-- Dump completed on 2024-06-29 16:39:20

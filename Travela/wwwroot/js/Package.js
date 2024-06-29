@@ -97,28 +97,31 @@ function BindGrid() {
                         <div>
                             <div class="col-md-12">
                                 <div class="card-outline-primary">
-                                    <div class="card">
+                                    <div class="packagecard">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-4">
-
+                                                    <img src="${package.image}" class="img-thumbnail" alt="Package Image" style="width: 100px; height: 100px;" />
+                                                    <h2>Package Name</h2>
+                                                    <p>${package.packageName}</p>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="d-flex justify-content-end">
-                                                        <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex mb-n3 me-3" style="float: right;" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" onclick="EditModel('${package.packageId}');">
+                                                        <a href="#" class="bg-primary rounded-circle p-2 text-white d-inline-flex mb-n3 me-3" style="float: right;" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" onclick="EditModel('${package.packageId}');">
                                                             <i class="ti ti-pencil fs-4"></i>
                                                         </a>
-                                                        <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex mb-n3 me-3" style="float: right;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" onclick="DeleteData('${package.packageId}');">
+                                                        <a href="#" class="bg-primary rounded-circle p-2 text-white d-inline-flex mb-n3 me-3" style="float: right;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" onclick="DeleteData('${package.packageId}');">
                                                             <i class="ti ti-trash fs-4"></i>
                                                         </a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-3"><label class="form-label">Package Name:</label><br>${package.packageName}</div>
-                                                <div class="col-md-3"><label class="form-label">Image:</label><br>${package.image}</div>
-                                                <div class="col-md-3"><label class="form-label">Package Amountt:</label><br>${package.packageAmt}</div>
-                                                <div class="col-md-3"><label class="form-label">Duration:</label><br>${package.noOfDays}D/ ${package.noOfNights}N</div>
+                                                <div class="col-md-3"><label class="form-label"><h4>Package Amount:</h4></label><br>${package.packageAmt}</div>
+                                                <div class="col-md-3"><label class="form-label"><h4>Duration:</h4></label><br>${package.noOfDays}D/ ${package.noOfNights}N</div>
+                                                <div class="col-md-3"><label class="form-label"><h4>Package Type:</h4></label><br>${package.packageType}</div>
+                                                <div class="col-md-3"><label class="form-label"><h4>Source:</h4></label><br>${package.sourceId}</div>
+
                                             </div>
                                         </div>
                                     </div>
